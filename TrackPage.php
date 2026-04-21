@@ -7,6 +7,29 @@
 
 <style>
 
+.top-right-btn {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+
+    background-color: hotpink;
+    color: white;
+
+    padding: 10px 16px;
+    border-radius: 10px;
+
+    text-decoration: none;
+    font-weight: bold;
+
+    z-index: 999; /* stays above everything */
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+    transition: 0.3s ease;
+}
+
+.top-right-btn:hover {
+    background-color: deeppink;
+    transform: scale(1.05);
+}
     .side-ad {
     position: fixed;
     top: 10%;              /* pushes them down a bit */
@@ -18,11 +41,13 @@
     border-radius: 10px;
 }
 
-/.ad-left {
+.ad-left {
+    pointer-events: none;
     left: 10px;   /* space from edge */
 }
 
 .ad-right {
+    pointer-events: none;
     right: 10px;  /* space from edge */
 }
 /* =======================
@@ -103,7 +128,7 @@ h1 {
     width: 22%;
     max-width: 200px;
     height: 28%;
-    max-height: 255px
+    max-height: 255px;
     aspect-ratio: 1 / 1;
     object-fit: cover;
     transition: 0.3s ease;
@@ -223,6 +248,10 @@ function activeStep($status, $steps) {
     </div>
 
 </div>
+
+<a href="https://students.cs.niu.edu/~z1977897/gpstore.php" class="top-right-btn">
+    Store Home
+</a>
 
 </body>
 </html>
