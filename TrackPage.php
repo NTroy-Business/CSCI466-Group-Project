@@ -30,6 +30,33 @@
     background-color: deeppink;
     transform: scale(1.05);
 }
+
+/* ------------------------------
+Top Button 2 
+ ------------------------------*/
+.top-right-btn2 {
+    position: fixed;
+    top: 60px;
+    right: 15px;
+
+    background-color: hotpink;
+    color: white;
+
+    padding: 10px 16px;
+    border-radius: 10px;
+
+    text-decoration: none;
+    font-weight: bold;
+
+    z-index: 999; /* stays above everything */
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+    transition: 0.3s ease;
+}
+
+.top-right-btn2:hover {
+    background-color: deeppink;
+    transform: scale(1.05);
+}
     .side-ad {
     position: fixed;
     top: 10%;              /* pushes them down a bit */
@@ -257,6 +284,10 @@ function activeStep($status, $steps) {
 
 <a href="https://students.cs.niu.edu/~z1977897/gpstore.php" class="top-right-btn">
     Store Home
+</a>
+
+<a href="https://students.cs.niu.edu/~z1977897/gpstore.php" class="top-right-btn2">
+    Shopping Cart
 </a>
 
 </body>
