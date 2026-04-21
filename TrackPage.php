@@ -122,6 +122,7 @@ h1 {
     flex-wrap: wrap;
     gap: 3%;
     margin-top: 30px;
+    
 }
 
 .img-box {
@@ -129,7 +130,7 @@ h1 {
     max-width: 200px;
     height: 28%;
     max-height: 255px;
-    aspect-ratio: 1 / 1;
+    aspect-ratio: 1 / 1.2;
     object-fit: cover;
     transition: 0.3s ease;
 }
@@ -139,10 +140,15 @@ h1 {
 ======================= */
 @media (max-width: 1000px) {
     .img-box {
-        width: 80%;
-        max-width: none;
+        width: auto;
+        max-width: 200px;
+        height: auto;          /* allow full height */
+        max-height: 255px
+        aspect-ratio: auto;    /* remove forced ratio */
+        object-fit: contain;   /* show entire image */
     }
-      .side-ad {
+
+    .side-ad {
         display: none !important;
     }
 
@@ -216,8 +222,8 @@ function activeStep($status, $steps) {
 </head>
 
 <body>
-<img class="side-ad ad-left" src="https://cdn.discordapp.com/attachments/1256462561063342142/1496000019118161971/images.png?ex=69e84a16&is=69e6f896&hm=30c21908e9b468fe398875c588a3590f1c140bfceea83cbb6856b0197a2b3bff&">
-<img class="side-ad ad-right" src="https://cdn.discordapp.com/attachments/1256462561063342142/1496000019118161971/images.png?ex=69e84a16&is=69e6f896&hm=30c21908e9b468fe398875c588a3590f1c140bfceea83cbb6856b0197a2b3bff&">
+<img class="side-ad ad-left" src="https://media.tenor.com/IRFM1RzwxV0AAAAm/goku-dance.webp">
+<img class="side-ad ad-right" src="https://media.tenor.com/cgByUMFw0r8AAAAm/minecraft-minecraft-steve.webp">
 <div class="page-wrapper">
 
     <h1>TRACK YOUR ORDER</h1>
