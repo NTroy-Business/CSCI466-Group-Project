@@ -24,6 +24,11 @@
     z-index: 999; /* stays above everything */
     box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
     transition: 0.3s ease;
+
+   
+    width: 100px;
+    max-width: 200px;
+    text-align: center;
 }
 
 .top-right-btn:hover {
@@ -51,6 +56,10 @@ Top Button 2
     z-index: 999; /* stays above everything */
     box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
     transition: 0.3s ease;
+
+    width: 100px;
+    max-width: 200px;
+    text-align: center;
 }
 
 .top-right-btn2:hover {
@@ -262,19 +271,19 @@ function activeStep($status, $steps) {
 
     <div class="gallery">
 
-        <img class="img-box"
+        <img class="img-box" title="Your Order Has Been Placed"
         style="<?= activeStep($status, ['OrderPlaced','Processing','Shipped','Delivered']) ?>"
         src="https://media.discordapp.net/attachments/1488268700904849598/1495981239918792764/Screenshot_2026-04-20_215512.png?ex=69e83899&is=69e6e719&hm=a99e5187d6f88bfd7cb721eb847eafe0b6adaec58188eb4cd5eecf141b6fd287&=&format=webp&quality=lossless">
 
-        <img class="img-box"
+        <img class="img-box" title="Your Order is being Processed"
         style="<?= activeStep($status, ['Processing','Shipped','Delivered']) ?>"
-        src="https://media.discordapp.net/attachments/1488268700904849598/1495981240212520970/Screenshot_2026-04-20_215435.png?ex=69e83899&is=69e6e719&hm=08aee18c6839cf1c71910496c26a149412456c4b5b6a27e3be541054f37affee&=&format=webp&quality=lossless">
-
-        <img class="img-box"
-        style="<?= activeStep($status, ['Shipped','Delivered']) ?>"
         src="https://media.discordapp.net/attachments/1488268700904849598/1495981240501932133/Screenshot_2026-04-20_215423.png?ex=69e83899&is=69e6e719&hm=af7cbe0280d5297a2eaa3ad5d01dbd72196a06507f52432f3191ee167dc94e14&=&format=webp&quality=lossless">
 
-        <img class="img-box"
+        <img class="img-box" title="Your Order Has Been Shipped!"
+        style="<?= activeStep($status, ['Shipped','Delivered']) ?>"
+        src="https://media.discordapp.net/attachments/1488268700904849598/1495981240212520970/Screenshot_2026-04-20_215435.png?ex=69e83899&is=69e6e719&hm=08aee18c6839cf1c71910496c26a149412456c4b5b6a27e3be541054f37affee&=&format=webp&quality=lossless">
+        
+        <img class="img-box" title="Your Order Has Arrived!"
         style="<?= activeStep($status, ['Delivered']) ?>"
         src="https://media.discordapp.net/attachments/1488268700904849598/1495981240778625095/Screenshot_2026-04-20_215405.png?ex=69e83899&is=69e6e719&hm=1992d7cd3550c5917c9e09fd31dc31be8ac5d4c896ff72d786a7226ed7d5fed2&=&format=webp&quality=lossless">
 
@@ -287,7 +296,7 @@ function activeStep($status, $steps) {
 </a>
 
 <a href="https://students.cs.niu.edu/~z1977897/gpstore.php" class="top-right-btn2">
-    Shopping Cart
+    My Cart
 </a>
 
 </body>
