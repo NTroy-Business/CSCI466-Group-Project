@@ -122,12 +122,32 @@ if (isset($_POST['step3'])) && isset($_POST['qty'])) {
     }
 
     #Step 3 Create a display of all Orders and change the Order Status accordingly
-    echo "<h1><b>Alter Status of Any Order</b></h1>";
-        echo "
+?>
+<h2>Update order status</h2>
+    <form method="POST">
+        <label>Select an order:</label>
+            <select name="order">
+                <?php
+                    $orderlist = $pdo->query("SELECT TrackingID FROM ORDERS");
+                    while ($row = $orderlist->fetch()) 
+                    {
+                        echo "<option value='{$row['TrackingID']}'>{$row['TrackingID']}</option>";
+                    }
+                ?>
+            </select>
 
+            <label>Select a status:</label>
+            <select name="status">
+                <?php
+                    $orderstatus = $pdo->query("SELECT OrderStatus FROM ORDERS");
+                    while ($row = $orderstatus->fetch()) 
+                    {
+                        echo "<option value='{$row['OrderStatus']}'>{$row['OrderStatus']}</option>";
+                    }
+                ?>
+            </select>
 
+        <input type="submit" name="submitupdateorder" value="update order">
 
-
-        ?>
     </body>
 </html>
