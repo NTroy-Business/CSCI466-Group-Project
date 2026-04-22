@@ -1,0 +1,137 @@
+<!--
+Employee Page
+Allows the viewer to alter quantity
+Table names: Order, StuffedAnimalStore, Requests, ShoppingCart
+-->
+
+<html>
+    <head>
+        <title>Employee Page Stuffie Store</title>
+    </head>
+    <body>
+        <h1><b>All Products:</b></h1>
+
+        <?php
+
+            ini_set('display_errors', 1);
+            ini_set('display_startup_errors', 1);
+            error_reporting(E_ALL);
+
+            $username = "z2015929";//Will be changed later
+            $passwd = "2006Aug30";//Will be changed later
+
+            try{
+                $dsn = "mysql:host=courses;dbname={$username}";
+                $pdo = new PDO($dsn, $username, $passwd);
+                }
+
+            catch(PDOexception $e) {
+                echo "Connection failed " . $e->getmessage();
+                exit();
+                }
+
+           #Step 1 Create a list of all the products in a Table format
+           $step1 = "SELECT StuffieID, Name, Price, InvQty FROM STUFFEDANIMALSTORE;";
+
+           $result1 = $pdo->query($step1);
+           $answer1 = $result1->fetchAll(PDO::FETCH_ASSOC);
+
+           echo "<table border='3'>";
+           echo "<tr>";
+
+
+
+                foreach($answer1[0] as $key => $value) {
+                    echo "<th>ID</th>";
+                    }
+            #print rows
+                foreach($answer1 as $row) {
+                    echo "<tr>";
+                foreach($row as $value) {
+                    echo "<td>$value</td>";
+                    }
+            echo "</tr>";
+        }
+
+      echo "</table>";
+
+       #Step 2 Allow the user to alter the InvQty of the products
+       echo "<h1><b>Alter The QTY of Any Product!</b></h1>";
+
+    echo "<br/>";
+        echo "<form method='POST' action='emp_page.php'>";
+            echo "<label for='part'>Choose a Product</label>";
+            echo "<select name='product' id='product'>";
+                echo "<option value='P1'>P1</option>";
+                echo "<option value='P2'>P2</option>";
+                echo "<option value='P3'>P3</option>";
+                echo "<option value='P4'>P4</option>";
+                echo "<option value='P5'>P5</option>";
+                echo "<option value='P6'>P6</option>";
+                echo "<option value='P7'>P7</option>";
+                echo "<option value='P8'>P8</option>";
+                echo "<option value='P9'>P9</option>";
+                echo "<option value='P10'>P10</option>";
+                echo "<option value='P11'>P11</option>";
+                echo "<option value='P12'>P12</option>";
+                echo "<option value='P13'>P13</option>";
+                echo "<option value='P14'>P14</option>";
+                echo "<option value='P15'>P15</option>";
+
+        echo "</select>";
+        echo "<br/>";
+        echo "How Many of That Specific Item to Restock<input type='number' name='qty'>";
+
+        echo "<input type='submit' name='step3' value='Confirm'>";
+    echo "</form>";
+
+#Check if there was an answer submitted
+if (isset($_POST['step3'])) && isset($_POST['qty'])) {
+    $product = $_POST['product'];
+    $qty = isset($_POST['qty']) ? $_POST['qty'] : null;
+
+    $checkStmt = $pdo->prepare("SELECT InvQty FROM STUFFEDANIMALSTORE WHERE StuffieID = ?");
+    $checkStmt->execute([$product]);
+    $answer3 = $checkStmt->fetch(PDO::FETCH_ASSOC);
+
+
+        if(!$answer3) {
+        echo "Invalid Request";
+        }
+    else {
+
+        $currentQTY = $answer3['InvQty'];
+
+        if($qty <= 0) {
+            echo "Invalid Qty amount";
+            }
+        else if($qty > 9999) {
+            echo "Invalid Qty amount exceeds InvQty";
+            }
+        else {
+            $updateSql = $pdo->prepare("UPDATE InvQty SET InvQty = InvQty + ? WHERE StuffieID = ?");
+            $updateSql->execute([$qty, $product]);
+            echo "<p>Update complete</p>";
+
+            $resultStmt = $pdo->prepare("SELECT ProductName, InvQty FROM STUFFEDANIMALSTORE WHERE StuffieID = ?");
+            $resultStmt->execute([$product]);
+            $updatedQTY = $resultStmt->fetch(PDO::FETCH_ASSOC);
+
+            $qty = $updatedQTY['InvQty'];
+            $ProductName = $_POST['ProductName'];
+
+            echo "<p>Product: $ProductName now has QTY of: $qty</p>";
+
+            }
+        }
+    }
+
+    #Step 3 Create a display of all Orders and change the Order Status accordingly
+    echo "<h1><b>Alter Status of Any Order</b></h1>";
+
+
+
+
+        ?>
+    </body>
+</html>
