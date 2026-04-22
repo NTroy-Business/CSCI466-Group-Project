@@ -9,7 +9,6 @@ CREATE TABLE STUFFEDANIMALSTORE (
     ProductSize ENUM('S','M','L','XL') NOT NULL,
     Price DECIMAL(6,2) NOT NULL,
     InvQty INT NOT NULL,
-    ProductDescription TEXT NOT NULL,
     PRIMARY KEY (StuffieID)
 );
 
