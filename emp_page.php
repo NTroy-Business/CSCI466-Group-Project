@@ -59,28 +59,23 @@ Table names: Order, StuffedAnimalStore, Requests, ShoppingCart
        echo "<h1><b>Alter The QTY of Any Product!</b></h1>";
 
     echo "<br/>";
-        echo "<form method='POST' action='emp_page.php'>";
-            echo "<label for='part'>Choose a Product</label>";
+        echo "<form method='POST'>";
+            echo "<label>Choose a Product:</label>";
             echo "<select name='product' id='product'>";
-                echo "<option value='P1'>P1</option>";
-                echo "<option value='P2'>P2</option>";
-                echo "<option value='P3'>P3</option>";
-                echo "<option value='P4'>P4</option>";
-                echo "<option value='P5'>P5</option>";
-                echo "<option value='P6'>P6</option>";
-                echo "<option value='P7'>P7</option>";
-                echo "<option value='P8'>P8</option>";
-                echo "<option value='P9'>P9</option>";
-                echo "<option value='P10'>P10</option>";
-                echo "<option value='P11'>P11</option>";
-                echo "<option value='P12'>P12</option>";
-                echo "<option value='P13'>P13</option>";
-                echo "<option value='P14'>P14</option>";
-                echo "<option value='P15'>P15</option>";
+
+            $ProductList = $pdo->query("SELECT StuffieID, name FROM STUFFEDANIMALSTORE");
+            while( $row = $ProductList->fetch())
+                {
+                    echo "<option value='{$row['P']}'>{$row['PNAME']}</option>";
+                    }
+                
+            echo "</select>";
+
+        echo "<input type="submit" name="submitPart" value="Show Products">";
 
         echo "</select>";
         echo "<br/>";
-        echo "How Many of That Specific Item to Restock<input type='number' name='qty'>";
+        echo "How Many of That Specific Item to Restock?<input type='number' name='qty'>";
 
         echo "<input type='submit' name='step3' value='Confirm'>";
     echo "</form>";
@@ -128,6 +123,7 @@ if (isset($_POST['step3'])) && isset($_POST['qty'])) {
 
     #Step 3 Create a display of all Orders and change the Order Status accordingly
     echo "<h1><b>Alter Status of Any Order</b></h1>";
+        echo "
 
 
 
