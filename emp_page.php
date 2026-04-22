@@ -18,7 +18,7 @@ Table names: Order, StuffedAnimalStore, Requests, ShoppingCart
             error_reporting(E_ALL);
 
             $username = "z2015929";//Will be changed later
-            $passwd = "2006Aug30";//Will be changed later
+            $passwd = "?????";//Will be changed later
 
             try{
                 $dsn = "mysql:host=courses;dbname={$username}";
