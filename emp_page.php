@@ -66,12 +66,12 @@ Table names: Order, StuffedAnimalStore, Requests, ShoppingCart
             $ProductList = $pdo->query("SELECT StuffieID, name FROM STUFFEDANIMALSTORE");
             while( $row = $ProductList->fetch())
                 {
-                    echo "<option value='{$row['P']}'>{$row['PNAME']}</option>";
+                    echo "<option value='{$row['StuffieID']}'>{$row['name']}</option>";
                     }
                 
             echo "</select>";
 
-        echo "<input type="submit" name="submitPart" value="Show Products">";
+        echo "<input type="submit" name="submit" value="Show Products">";
 
         echo "</select>";
         echo "<br/>";
@@ -122,16 +122,18 @@ if (isset($_POST['step3'])) && isset($_POST['qty'])) {
     }
 
     #Step 3 Create a display of all Orders and change the Order Status accordingly
-?>
-<h2>Update order status</h2>
+?>      
+<h2>Update order status of any order</h2>
     <form method="POST">
         <label>Select an order:</label>
             <select name="order">
                 <?php
                     $orderlist = $pdo->query("SELECT TrackingID FROM ORDERS");
+                    $count = 0;
                     while ($row = $orderlist->fetch()) 
                     {
-                        echo "<option value='{$row['TrackingID']}'>{$row['TrackingID']}</option>";
+                        echo "<option value='{$row['TrackingID']}'>Order ++$count</option>";
+                        
                     }
                 ?>
             </select>
