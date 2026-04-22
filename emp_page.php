@@ -150,6 +150,45 @@ if (isset($_POST['step3'])) && isset($_POST['qty'])) {
             </select>
 
         <input type="submit" name="submitupdateorder" value="update order">
+            
+        
+        <!-- Step 4 Make a image to return -->
+        <style>
+            .store-button {
+                position: fixed;
+                top: 15px;
+                right: 15px;
+                
+                background-color: hotpink;
+                color: white;
 
+                padding: 10px 16px;
+                border-radius: 10px;
+
+                text-decoration: none;
+                font-weight: bold;
+
+                z-index: 999; /* stays above everything */
+                box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+                transition: 0.3s ease;
+
+   
+                width: 100px;
+                max-width: 200px;
+                text-align: center;
+}
+            
+.top-right-btn:hover {
+    background-color: deeppink;
+    transform: scale(1.05);
+}
+
+            
+        </style>
+        
+        <a = href="https://students.cs.niu.edu/~z1977897/gpstore.php" class="store-button">
+            Store Home
+        </a>
+        
     </body>
 </html>
