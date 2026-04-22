@@ -7,7 +7,6 @@ CREATE TABLE STUFFEDANIMALSTORE (
     StuffieID VARCHAR(64) NOT NULL,
     ProductName VARCHAR(64) NOT NULL,
     ProductSize ENUM('S','M','L','XL') NOT NULL,
-    Color VARCHAR(32) NOT NULL,
     Price DECIMAL(6,2) NOT NULL,
     InvQty INT NOT NULL,
     ProductDescription TEXT NOT NULL,
