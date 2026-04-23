@@ -230,7 +230,7 @@ $order = null;
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $trackingID = $_POST["Track_ID"] ?? "";
 
-    if (!empty($trackingID) && strlen($trackingID) <= 64) {
+    if (!empty($trackingID) && strlen($trackingID) <= 128) {
 
         $stmt = $pdo->prepare("
             SELECT TRACKING_ID, OrderStatus, Total 
@@ -265,7 +265,7 @@ function activeStep($status, $steps) {
     <h1>TRACK YOUR ORDER</h1>
 
     <form method="POST" class="track-form">
-        <input type="text" name="Track_ID" maxlength="64" placeholder="Enter Tracking ID" required>
+        <input type="text" name="Track_ID" maxlength="128" placeholder="Enter Tracking ID" required>
         <button type="submit">Track Your Order</button>
     </form>
 
