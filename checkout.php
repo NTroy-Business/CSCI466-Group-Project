@@ -1,17 +1,73 @@
-
 <!DOCTYPE HTML>
 <html>
 
 <head>
-<?php
-session_start();
-echo "Session ID: " . session_id();
-?>
+
 <title></title>
 <meta charset="UTF-8">
 <style>
 
-    
+.track-form {
+    width: 90%;
+    max-width: 400px;
+    position: center;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.track-form input {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    border: 2px solid pink;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+.track-form button {
+    margin-top: 10px;
+    padding: 10px 16px;
+    background-color: hotpink;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.track-form button:hover {
+    background-color: deeppink;
+}
+
+    .top-right-btn {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+
+    background-color: hotpink;
+    color: white;
+
+    padding: 10px 16px;
+    border-radius: 10px;
+
+    text-decoration: none;
+    font-weight: bold;
+
+    z-index: 999; /* stays above everything */
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+    transition: 0.3s ease;
+
+   
+    width: 100px;
+    max-width: 200px;
+    text-align: center;
+}
+
+.top-right-btn:hover {
+    background-color: deeppink;
+    transform: scale(1.05);
+}
+
 /* ------------------------------
 Top Button 2 
  ------------------------------*/
@@ -84,7 +140,7 @@ body {
     font-size: 75px;
     font-color: white;
     font-weight: bold;
-    color: #3cff00;
+    color: white;
     background-color: hotpink;
         
 }
@@ -120,7 +176,24 @@ try {
 } catch (PDOException $e) {
     die("Connection failed: " . $e->getMessage());
 }
-$TrackID = "T102"; // CORRECT THIS LATER TO PROPER ID!!!!
+$TrackID = session_id(); 
+
+// TEMPORARY: Insert a fake item into the cart so checkout works
+//=========================================================================================
+$tempInsert = $pdo->prepare("
+    INSERT INTO SHOPPINGCART (TrackingID, StuffieID, CartQty)
+    VALUES (?, ?, ?)
+");
+
+// Only insert once per session
+$check = $pdo->prepare("SELECT 1 FROM SHOPPINGCART WHERE TrackingID = ? LIMIT 1");
+$check->execute([$TrackID]);
+
+if ($check->rowCount() === 0) {
+    $tempInsert->execute([$TrackID, "S001", 1]);
+}
+
+//-------------------------------------------------
 $TotalPrice = 0.00;
 $sqlPrepared = $pdo->prepare("SELECT StuffieID FROM SHOPPINGCART WHERE TrackingID = ?"); //where trackingID = SessionID
 $sqlPrepared->execute([$TrackID]);
@@ -137,7 +210,7 @@ $PriceArray = [];
 <body>
 <div class="page-wrapper">
     <?php
-    $TrackingIdTemp = "T666"; //this wont work. The shopping cart must already have this. 
+    
     $DefaultStatus = "Processing";
     foreach($StuffieIDs as $SID) {
         $sqlPrepared2->execute([$SID]);
@@ -167,10 +240,8 @@ $PriceArray = [];
             VALUES (?, ?, ?, ?, ?, ?)
         ");
 
-        header("Location: checkout.php?success=1"); //this resets the page so that old php info doesnt get pushed every time it reloads
-        exit;
         $sqlInsert->execute([
-            $TrackingIdTemp,
+            $TrackID,
             $DefaultStatus,
             $TotalPrice,
             $CreditCard,
@@ -178,6 +249,10 @@ $PriceArray = [];
             $BillAdd
         ]);
     }
+
+    
+        header("Location: checkout.php?success=1"); //this resets the page so that old php info doesnt get pushed every time it reloads
+        exit;
 }
 
     ?>
@@ -200,14 +275,25 @@ $PriceArray = [];
         $<?php echo $FormatTotal?>
     </div>
 </div>
+<?php if ($TotalPrice > 0): ?>
 
-<form method="POST">
+
+    <form method="POST">
     <input type="text" placeholder="CC (16 digits)" name="Credit_Card" required>
-    <input type="text" placeholder="ShipAddr" name="Ship_Add"  required>
+    <input type="text" placeholder="ShipAddr" name="Ship_Add" required>
     <input type="text" placeholder="BillAddr" name="Bill_Add" required>
     <button type="submit">Place Order</button>
 </form>
+<?php else: ?>
+<p style="color:red; font-size:24px; text-align:center;">
+    Your cart is empty — add items before checking out.
+</p>
+<?php endif; ?>
 
+
+<a href="https://students.cs.niu.edu/~z2054630/stuffiestore.php" class="top-right-btn">
+    Store Home
+</a>
 <a href="https://students.cs.niu.edu/~z1977897/gpstore.php" class="top-right-btn2">
     My Cart
 </a>
