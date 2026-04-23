@@ -233,9 +233,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (!empty($trackingID) && strlen($trackingID) <= 128) {
 
         $stmt = $pdo->prepare("
-            SELECT TRACKING_ID, OrderStatus, Total 
+            SELECT TrackingID, OrderStatus, Total 
             FROM ORDERS 
-            WHERE TRACKING_ID = ?
+            WHERE TrackingID = ?
         ");
 
         $stmt->execute([$trackingID]);
