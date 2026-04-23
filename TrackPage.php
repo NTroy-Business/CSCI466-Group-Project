@@ -212,8 +212,8 @@ UPDATE THE CREDENTIALS HERE
 =====================CHANGE____CREDS=====================
 */
 try {
-    $username = ""; //MAKE UR USERNAME
-    $password = ""; // MAKE UR USERNAME
+    $username = "z2054630"; //MAKE UR USERNAME
+    $password = "2006Oct12"; // MAKE UR USERNAME
     $dsn = "mysql:host=courses;dbname=z2054630"; // CHANGE Z_ID
     $pdo = new PDO($dsn, $username, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -230,12 +230,12 @@ $order = null;
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $trackingID = $_POST["Track_ID"] ?? "";
 
-    if (!empty($trackingID) && strlen($trackingID) <= 128) {
+    if (!empty($trackingID) && strlen($trackingID) <=128) {
 
         $stmt = $pdo->prepare("
             SELECT TrackingID, OrderStatus, Total 
             FROM ORDERS 
-            WHERE TrackingID = ?
+            WHERE TrackingID= ?
         ");
 
         $stmt->execute([$trackingID]);
@@ -265,7 +265,7 @@ function activeStep($status, $steps) {
     <h1>TRACK YOUR ORDER</h1>
 
     <form method="POST" class="track-form">
-        <input type="text" name="Track_ID" maxlength="128" placeholder="Enter Tracking ID" required>
+        <input type="text" name="Track_ID" maxlength="64" placeholder="Enter Tracking ID" required>
         <button type="submit">Track Your Order</button>
     </form>
 
@@ -291,12 +291,12 @@ function activeStep($status, $steps) {
 
 </div>
 
-<a href="https://students.cs.niu.edu/~z1977897/gpstore.php" class="top-right-btn">
+<a href="https://students.cs.niu.edu/~z2054630/stuffiestore.php" class="top-right-btn">
     Store Home
 </a>
 
-<a href="https://students.cs.niu.edu/~z1977897/gpstore.php" class="top-right-btn2">
-    My Cart
+<a href="https://students.cs.niu.edu/~z2054630/checkout.php" class="top-right-btn2">
+    Chechout
 </a>
 
 </body>
