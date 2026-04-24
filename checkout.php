@@ -166,7 +166,7 @@ try {
     die("Connection failed: " . $e->getMessage());
 }
 $TrackID = session_id(); 
-
+/*
 // TEMPORARY: Insert a fake item into the cart so checkout works
 //=========================================================================================
 $tempInsert = $pdo->prepare("
@@ -181,7 +181,7 @@ $check->execute([$TrackID]);
 if ($check->rowCount() === 0) {
     $tempInsert->execute([$TrackID, "S001", 1]);
 }
-
+*/
 //-------------------------------------------------
 $TotalPrice = 0.00;
 $sqlPrepared = $pdo->prepare("SELECT StuffieID FROM SHOPPINGCART WHERE TrackingID = ?"); //where trackingID = SessionID
