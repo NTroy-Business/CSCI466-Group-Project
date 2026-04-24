@@ -45,6 +45,7 @@ Table names: ORDERS, STUFFEDANIMALSTORE, REQUESTS, SHOPPINGCART
                     echo "<th>$key</th>";
                     }
             }
+            echo "</tr>";
             #print rows
                 foreach($answer1 as $row) {
                     echo "<tr>";
@@ -72,12 +73,10 @@ Table names: ORDERS, STUFFEDANIMALSTORE, REQUESTS, SHOPPINGCART
                 
             echo "</select>";
 
-        echo "<input type='submit' name='submit' value='Show Products'>";
-
         echo "<br/>";
         echo "How Many of That Specific Item to Restock?<input type='number' name='qty'>";
 
-        echo "<input type='submit' name='step3' value='Confirm'>";
+        echo "<input type='submit' name='step3' value='Add to InvQty'>";
     echo "</form>";
 
 #Check if there was an answer submitted
@@ -159,7 +158,7 @@ if (isset($_POST['step3']) && isset($_POST['qty'])) {
         $update = $pdo->prepare("UPDATE ORDERS SET OrderStatus = ? WHERE TrackingID = ?");
         $update->execute([$status, $order]);
 
-        echo "<p><b>Order Updated!<b></p>";
+        echo "<p><b>Order Updated!</b></p>";
             }
     ?>
         
