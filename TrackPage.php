@@ -1,5 +1,15 @@
  <?php
-        require_once "storedCreds.php";
+        try 
+{
+    $username = "z1977897";
+    $password = "";
+    $dsn = "mysql:host=courses;dbname=z1977897";
+    $pdo = new PDO($dsn, $username, $password);
+}
+catch(PDOException $e)
+{
+    echo "Connection to database failed: " . $e->getMessage();
+}
     ?>
 <!DOCTYPE HTML>
 <html>
@@ -200,20 +210,10 @@ h1 {
 
 <?php
 session_start();
-echo "Session ID: " . session_id();
-
 
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
-try {
-    $pdo = new PDO($stored_database, $stored_user, $stored_pass);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-} catch (PDOException $e) {
-    die("Connection failed: " . $e->getMessage());
-}
 
 /* =======================
    GET ORDER DATA
@@ -266,29 +266,29 @@ function activeStep($status, $steps) {
 
         <img class="img-box" title="Your Order Has Been Placed"
         style="<?= activeStep($status, ['OrderPlaced','Processing','Shipped','Delivered']) ?>"
-        src="https://media.discordapp.net/attachments/1488268700904849598/1495981239918792764/Screenshot_2026-04-20_215512.png?ex=69e83899&is=69e6e719&hm=a99e5187d6f88bfd7cb721eb847eafe0b6adaec58188eb4cd5eecf141b6fd287&=&format=webp&quality=lossless">
+        src="https://media.discordapp.net/attachments/1488268700904849598/1495981239918792764/Screenshot_2026-04-20_215512.png?ex=69eb8459&is=69ea32d9&hm=c2d1fe2d76db34dd93b806680a9278d9a7579eeea692d05b088d7752227c5930&=&format=webp&quality=lossless">
 
         <img class="img-box" title="Your Order is being Processed"
         style="<?= activeStep($status, ['Processing','Shipped','Delivered']) ?>"
-        src="https://media.discordapp.net/attachments/1488268700904849598/1495981240501932133/Screenshot_2026-04-20_215423.png?ex=69e83899&is=69e6e719&hm=af7cbe0280d5297a2eaa3ad5d01dbd72196a06507f52432f3191ee167dc94e14&=&format=webp&quality=lossless">
+        src="https://media.discordapp.net/attachments/1488268700904849598/1495981240212520970/Screenshot_2026-04-20_215435.png?ex=69eb8459&is=69ea32d9&hm=f61252407aa89608c95b86a815ae0083bf71f8a4c74ddaa780fe31990b8ad6bf&=&format=webp&quality=lossless">
 
         <img class="img-box" title="Your Order Has Been Shipped!"
         style="<?= activeStep($status, ['Shipped','Delivered']) ?>"
-        src="https://media.discordapp.net/attachments/1488268700904849598/1495981240212520970/Screenshot_2026-04-20_215435.png?ex=69e83899&is=69e6e719&hm=08aee18c6839cf1c71910496c26a149412456c4b5b6a27e3be541054f37affee&=&format=webp&quality=lossless">
+        src="https://media.discordapp.net/attachments/1488268700904849598/1495981240501932133/Screenshot_2026-04-20_215423.png?ex=69eb8459&is=69ea32d9&hm=9f12710b5b4d90d23e05d026164eca0c88da5013e28414e793dc1c1dfeab2342&=&format=webp&quality=lossless">
         
         <img class="img-box" title="Your Order Has Arrived!"
         style="<?= activeStep($status, ['Delivered']) ?>"
-        src="https://media.discordapp.net/attachments/1488268700904849598/1495981240778625095/Screenshot_2026-04-20_215405.png?ex=69e83899&is=69e6e719&hm=1992d7cd3550c5917c9e09fd31dc31be8ac5d4c896ff72d786a7226ed7d5fed2&=&format=webp&quality=lossless">
+        src="https://media.discordapp.net/attachments/1488268700904849598/1495981240778625095/Screenshot_2026-04-20_215405.png?ex=69eb8459&is=69ea32d9&hm=40f8c108420e0e69ddda314eb0d4fc886d53b5c837c645e2b94f273d8686a351&=&format=webp&quality=lossless">
 
     </div>
 
 </div>
 
-<a href="https://students.cs.niu.edu/~z2054630/stuffiestore.php" class="top-right-btn">
+<a href="https://students.cs.niu.edu/~z1977897/gpstore.php" class="top-right-btn">
     Store Home
 </a>
 
-<a href="https://students.cs.niu.edu/~z2054630/checkout.php" class="top-right-btn2">
+<a href="https://students.cs.niu.edu/~z1977897/checkout.php" class="top-right-btn2">
     Checkout
 </a>
 
