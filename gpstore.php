@@ -1,10 +1,11 @@
 <?php
+        require_once "storedCreds.php";
+    ?>
+<?php
 try 
 {
-    $username = "z1977897";
-    $password = "";
-    $dsn = "mysql:host=courses;dbname=z1977897";
-    $pdo = new PDO($dsn, $username, $password);
+   $pdo = new PDO($stored_database, $stored_user, $stored_pass);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 }
 catch(PDOException $e)
 {
