@@ -12,7 +12,7 @@ catch(PDOException $e)
 {
     echo "Connection to database failed: " . $e->getMessage();
 }
-    ?>
+    ?> 
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -268,19 +268,19 @@ function activeStep($status, $steps) {
 
         <img class="img-box" title="Your Order Has Been Placed"
         style="<?= activeStep($status, ['OrderPlaced','Processing','Shipped','Delivered']) ?>"
-        src="https://media.discordapp.net/attachments/1488268700904849598/1495981239918792764/Screenshot_2026-04-20_215512.png?ex=69eb8459&is=69ea32d9&hm=c2d1fe2d76db34dd93b806680a9278d9a7579eeea692d05b088d7752227c5930&=&format=webp&quality=lossless">
+        src="https://students.cs.niu.edu/~z1977897/order%20placed.png">
 
         <img class="img-box" title="Your Order is being Processed"
         style="<?= activeStep($status, ['Processing','Shipped','Delivered']) ?>"
-        src="https://media.discordapp.net/attachments/1488268700904849598/1495981240212520970/Screenshot_2026-04-20_215435.png?ex=69eb8459&is=69ea32d9&hm=f61252407aa89608c95b86a815ae0083bf71f8a4c74ddaa780fe31990b8ad6bf&=&format=webp&quality=lossless">
+        src="https://students.cs.niu.edu/~z1977897/order%20processing.png">
 
         <img class="img-box" title="Your Order Has Been Shipped!"
         style="<?= activeStep($status, ['Shipped','Delivered']) ?>"
-        src="https://media.discordapp.net/attachments/1488268700904849598/1495981240501932133/Screenshot_2026-04-20_215423.png?ex=69eb8459&is=69ea32d9&hm=9f12710b5b4d90d23e05d026164eca0c88da5013e28414e793dc1c1dfeab2342&=&format=webp&quality=lossless">
+        src="https://students.cs.niu.edu/~z1977897/order%20shipped.png">
         
         <img class="img-box" title="Your Order Has Arrived!"
         style="<?= activeStep($status, ['Delivered']) ?>"
-        src="https://media.discordapp.net/attachments/1488268700904849598/1495981240778625095/Screenshot_2026-04-20_215405.png?ex=69eb8459&is=69ea32d9&hm=40f8c108420e0e69ddda314eb0d4fc886d53b5c837c645e2b94f273d8686a351&=&format=webp&quality=lossless">
+        src="https://students.cs.niu.edu/~z1977897/order%20delivered.png">
 
     </div>
 
