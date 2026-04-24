@@ -199,18 +199,21 @@ $PriceArray = [];
     }
         $FormatTotal = number_format($TotalPrice, 2, '.', '');
 
+        $errorMessage = "";
+
     if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $CreditCard = $_POST["Credit_Card"] ?? "";
     $ShipAdd    = $_POST["Ship_Add"] ?? "";
     $BillAdd    = $_POST["Bill_Add"] ?? "";
 
-    if (!empty($CreditCard) &&
-        !empty($ShipAdd) &&
-        !empty($BillAdd) &&
-        strlen($CreditCard) == 16 &&
-        strlen($ShipAdd) <= 128 &&
-        strlen($BillAdd) <= 128) {
+    if (strlen($CreditCard) !== 16) {
+        $errorMessage = "Credit Card must be exactly 16 digits.";
+    }
+    elseif (!empty($ShipAdd) &&
+            !empty($BillAdd) &&
+            strlen($ShipAdd) <= 128 &&
+            strlen($BillAdd) <= 128) {
 
         // Insert the order
         $sqlInsert = $pdo->prepare("
