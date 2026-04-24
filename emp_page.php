@@ -72,7 +72,7 @@ Table names: ORDERS, STUFFEDANIMALSTORE, REQUESTS, SHOPPINGCART
                 
             echo "</select>";
 
-        echo "<input type='submit' name='submit' value='Show Products'>;"
+        echo "<input type='submit' name='submit' value='Show Products'>";
 
         echo "<br/>";
         echo "How Many of That Specific Item to Restock?<input type='number' name='qty'>";
