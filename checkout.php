@@ -1,3 +1,6 @@
+ <?php
+        require_once "storedCreds.php";
+    ?>
 <!DOCTYPE HTML>
 <html>
 
@@ -153,24 +156,10 @@ echo "Session ID: " . session_id();
 
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
-/*
-=====================CHANGE____CREDS=====================
-=====================CHANGE____CREDS=====================
-=====================CHANGE____CREDS=====================
-=====================CHANGE____CREDS=====================
 
-UPDATE THE CREDENTIALS HERE
-
-=====================CHANGE____CREDS=====================
-=====================CHANGE____CREDS=====================
-=====================CHANGE____CREDS=====================
-=====================CHANGE____CREDS=====================
-*/
 try {
-    $username = "z2054630"; //MAKE UR USERNAME
-    $password = "2006Oct12"; // MAKE UR USERNAME
-    $dsn = "mysql:host=courses;dbname=z2054630"; // CHANGE Z_ID
-    $pdo = new PDO($dsn, $username, $password);
+
+    $pdo = new PDO($stored_database, $stored_user, $stored_pass);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 } catch (PDOException $e) {
@@ -222,7 +211,7 @@ $PriceArray = [];
     }
         $FormatTotal = number_format($TotalPrice, 2, '.', '');
 
-        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $CreditCard = $_POST["Credit_Card"] ?? "";
     $ShipAdd    = $_POST["Ship_Add"] ?? "";
@@ -235,6 +224,7 @@ $PriceArray = [];
         strlen($ShipAdd) <= 128 &&
         strlen($BillAdd) <= 128) {
 
+        // Insert the order
         $sqlInsert = $pdo->prepare("
             INSERT INTO ORDERS (TrackingID, OrderStatus, Total, CCInfo, ShippingAddr, BillingAddr)
             VALUES (?, ?, ?, ?, ?, ?)
@@ -248,11 +238,11 @@ $PriceArray = [];
             $ShipAdd,
             $BillAdd
         ]);
-    }
 
-    
-        header("Location: checkout.php?success=1"); //this resets the page so that old php info doesnt get pushed every time it reloads
+        // Redirect ONLY after successful insert
+        header("Location: checkout.php?success=1");
         exit;
+    }
 }
 
     ?>
@@ -294,8 +284,8 @@ $PriceArray = [];
 <a href="https://students.cs.niu.edu/~z2054630/stuffiestore.php" class="top-right-btn">
     Store Home
 </a>
-<a href="https://students.cs.niu.edu/~z1977897/gpstore.php" class="top-right-btn2">
-    My Cart
+<a href="https://students.cs.niu.edu/~z2054630/track.php" class="top-right-btn2">
+    Track Your Package
 </a>
 
 
