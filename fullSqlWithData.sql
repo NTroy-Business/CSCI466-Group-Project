@@ -60,10 +60,10 @@ VALUES
 	('S014','coronavirus','XL',2019.00,1),
 	('S015','skunkie','M',510.50,3),
 	('S016','froggo','S',149.99,11),
-	('S017','bearo','L',799.99,2);
+	('S017','bearo','L',799.99,2),
 	('S018','octoplush','S',8.00,25),
 	('S019','snugglecat','S',275.00,5),
-	('S020','doggo deluxe','XL',1249.99,1),
+	('S020','doggo deluxe','XL',1249.99,1);
 
 -- SHOPPING CART
 INSERT INTO SHOPPINGCART
