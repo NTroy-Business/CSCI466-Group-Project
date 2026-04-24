@@ -268,7 +268,7 @@ $PriceArray = [];
 <?php if ($TotalPrice > 0): ?>
 
 
-    <form method="POST">
+    <form method="POST" class="track-form">
     <input type="text" placeholder="CC (16 digits)" name="Credit_Card" required>
     <input type="text" placeholder="ShipAddr" name="Ship_Add" required>
     <input type="text" placeholder="BillAddr" name="Bill_Add" required>
