@@ -1,7 +1,7 @@
 <!--
 Employee Page
 Allows the viewer to alter quantity
-Table names: Order, StuffedAnimalStore, Requests, ShoppingCart
+Table names: ORDERS, STUFFEDANIMALSTORE, REQUESTS, SHOPPINGCART
 -->
 
 <html>
