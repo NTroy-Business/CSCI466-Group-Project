@@ -289,7 +289,7 @@ function activeStep($status, $steps) {
 </a>
 
 <a href="https://students.cs.niu.edu/~z2054630/checkout.php" class="top-right-btn2">
-    Chechout
+    Checkout
 </a>
 
 </body>
