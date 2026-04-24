@@ -1,5 +1,15 @@
  <?php
-        require_once "storedCreds.php";
+        try 
+{
+    $username = "z1977897";
+    $password = "";
+    $dsn = "mysql:host=courses;dbname=z1977897";
+    $pdo = new PDO($dsn, $username, $password);
+}
+catch(PDOException $e)
+{
+    echo "Connection to database failed: " . $e->getMessage();
+}
     ?>
 <!DOCTYPE HTML>
 <html>
@@ -152,37 +162,13 @@ body {
 
 <?php
 session_start();
-echo "Session ID: " . session_id();
 
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-try {
 
-    $pdo = new PDO($stored_database, $stored_user, $stored_pass);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-} catch (PDOException $e) {
-    die("Connection failed: " . $e->getMessage());
-}
 $TrackID = session_id(); 
-/*
-// TEMPORARY: Insert a fake item into the cart so checkout works
-//=========================================================================================
-$tempInsert = $pdo->prepare("
-    INSERT INTO SHOPPINGCART (TrackingID, StuffieID, CartQty)
-    VALUES (?, ?, ?)
-");
 
-// Only insert once per session
-$check = $pdo->prepare("SELECT 1 FROM SHOPPINGCART WHERE TrackingID = ? LIMIT 1");
-$check->execute([$TrackID]);
-
-if ($check->rowCount() === 0) {
-    $tempInsert->execute([$TrackID, "S001", 1]);
-}
-*/
-//-------------------------------------------------
 $TotalPrice = 0.00;
 $sqlPrepared = $pdo->prepare("SELECT StuffieID FROM SHOPPINGCART WHERE TrackingID = ?"); //where trackingID = SessionID
 $sqlPrepared->execute([$TrackID]);
@@ -239,14 +225,15 @@ $PriceArray = [];
             $BillAdd
         ]);
 
+        session_regenerate_id(true);
+        echo $TrackID;
+
         // Redirect ONLY after successful insert
-        header("Location: checkout.php?success=1");
+        header("Location: trackpage.php?success=1");
         exit;
     }
 }
-
     ?>
-
 
     <div class="checkout checkout-prices">
         <div class="checkout-top">
@@ -266,13 +253,15 @@ $PriceArray = [];
     </div>
 </div>
 <?php if ($TotalPrice > 0): ?>
-
+    <h1 style="text-align:center">THIS WILL BE YOUR TRACKING ID, PLEASE KEEP NOTE OF IT:</h1>
+    <h1 style="text-align:center"><?php echo $TrackID; ?></h1>
 
     <form method="POST" class="track-form">
     <input type="text" placeholder="CC (16 digits)" name="Credit_Card" required>
     <input type="text" placeholder="ShipAddr" name="Ship_Add" required>
     <input type="text" placeholder="BillAddr" name="Bill_Add" required>
     <button type="submit">Place Order</button>
+
 </form>
 <?php else: ?>
 <p style="color:red; font-size:24px; text-align:center;">
@@ -281,10 +270,10 @@ $PriceArray = [];
 <?php endif; ?>
 
 
-<a href="https://students.cs.niu.edu/~z2054630/stuffiestore.php" class="top-right-btn">
+<a href="https://students.cs.niu.edu/~z1977897/gpstore.php" class="top-right-btn">
     Store Home
 </a>
-<a href="https://students.cs.niu.edu/~z2054630/track.php" class="top-right-btn2">
+<a href="https://students.cs.niu.edu/~z1977897/trackpage.php" class="top-right-btn2">
     Track Your Package
 </a>
 
