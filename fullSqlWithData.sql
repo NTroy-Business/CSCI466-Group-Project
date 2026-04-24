@@ -44,26 +44,26 @@ CREATE TABLE REQUESTS (
 INSERT INTO STUFFEDANIMALSTORE
 	(StuffieID, ProductName, ProductSize, Price, InvQty) 
 VALUES
-	('S006','clodsire','L',980.00,1),
-	('S018','octoplush','S',8.00,25),
-	('S002','urawr','M',67.00,6),
-	('S014','coronavirus','XL',2019.00,1),
-	('S003','mirawr','S',3.25,140),
-	('S011','shibata roll','M',455.00,7),
-	('S005','quagsire','L',620.00,2),
-	('S016','froggo','S',149.99,11),
 	('S001','erawr','M',500.00,3),
-	('S019','snugglecat','S',275.00,5),
-	('S009','shibata BIG','XL',515.00,1),
-	('S013','hedhog','S',520.00,4),
-	('S007','tamago','S',495.00,6),
-	('S010','burnt chibatta','M',499.00,2),
-	('S012','sharkie','L',510.00,2),
+	('S002','urawr','M',67.00,6),
+	('S003','mirawr','S',3.25,140),
 	('S004','tirawr','M',487.75,5),
-	('S020','doggo deluxe','XL',1249.99,1),
-	('S015','skunkie','M',510.50,3),
+	('S005','quagsire','L',620.00,2),
+	('S006','clodsire','L',980.00,1),
+	('S007','tamago','S',495.00,6),
 	('S008','shibata','M',420.00,8),
+	('S009','shibata BIG','XL',515.00,1),
+	('S010','burnt chibatta','M',499.00,2),
+	('S011','shibata roll','M',455.00,7),
+	('S012','sharkie','L',510.00,2),
+	('S013','hedhog','S',520.00,4),
+	('S014','coronavirus','XL',2019.00,1),
+	('S015','skunkie','M',510.50,3),
+	('S016','froggo','S',149.99,11),
 	('S017','bearo','L',799.99,2);
+	('S018','octoplush','S',8.00,25),
+	('S019','snugglecat','S',275.00,5),
+	('S020','doggo deluxe','XL',1249.99,1),
 
 -- SHOPPING CART
 INSERT INTO SHOPPINGCART
