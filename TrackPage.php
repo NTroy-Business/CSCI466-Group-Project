@@ -199,6 +199,10 @@ h1 {
 </style>
 
 <?php
+session_start();
+echo "Session ID: " . session_id();
+
+
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 try {
