@@ -2,7 +2,7 @@
 try 
 {
     $username = "z1977897";
-    $password = "2004Mar29";
+    $password = "";
     $dsn = "mysql:host=courses;dbname=z1977897";
     $pdo = new PDO($dsn, $username, $password);
 }
