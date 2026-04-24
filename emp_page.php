@@ -31,7 +31,7 @@ Table names: ORDERS, STUFFEDANIMALSTORE, REQUESTS, SHOPPINGCART
                 }
 
            #Step 1 Create a list of all the products in a Table format
-           $step1 = "SELECT StuffieID, Name, Price, InvQty FROM STUFFEDANIMALSTORE;";
+           $step1 = "SELECT StuffieID, ProductName, Price, InvQty FROM STUFFEDANIMALSTORE;";
 
            $result1 = $pdo->query($step1);
            $answer1 = $result1->fetchAll(PDO::FETCH_ASSOC);
@@ -40,10 +40,11 @@ Table names: ORDERS, STUFFEDANIMALSTORE, REQUESTS, SHOPPINGCART
            echo "<tr>";
 
 
-
+            if (!empty($answer1)) {
                 foreach($answer1[0] as $key => $value) {
-                    echo "<th>ID</th>";
+                    echo "<th>$key</th>";
                     }
+            }
             #print rows
                 foreach($answer1 as $row) {
                     echo "<tr>";
@@ -63,17 +64,16 @@ Table names: ORDERS, STUFFEDANIMALSTORE, REQUESTS, SHOPPINGCART
             echo "<label>Choose a Product:</label>";
             echo "<select name='product' id='product'>";
 
-            $ProductList = $pdo->query("SELECT StuffieID, name FROM STUFFEDANIMALSTORE");
+            $ProductList = $pdo->query("SELECT StuffieID, ProductName FROM STUFFEDANIMALSTORE");
             while( $row = $ProductList->fetch())
                 {
-                    echo "<option value='{$row['StuffieID']}'>{$row['name']}</option>";
+                    echo "<option value='{$row['StuffieID']}'>{$row['ProductName']}</option>";
                     }
                 
             echo "</select>";
 
-        echo "<input type="submit" name="submit" value="Show Products">";
+        echo "<input type='submit' name='submit' value='Show Products'>;"
 
-        echo "</select>";
         echo "<br/>";
         echo "How Many of That Specific Item to Restock?<input type='number' name='qty'>";
 
@@ -81,7 +81,7 @@ Table names: ORDERS, STUFFEDANIMALSTORE, REQUESTS, SHOPPINGCART
     echo "</form>";
 
 #Check if there was an answer submitted
-if (isset($_POST['step3'])) && isset($_POST['qty'])) {
+if (isset($_POST['step3']) && isset($_POST['qty'])) {
     $product = $_POST['product'];
     $qty = isset($_POST['qty']) ? $_POST['qty'] : null;
 
@@ -104,7 +104,7 @@ if (isset($_POST['step3'])) && isset($_POST['qty'])) {
             echo "Invalid Qty amount exceeds InvQty";
             }
         else {
-            $updateSql = $pdo->prepare("UPDATE InvQty SET InvQty = InvQty + ? WHERE StuffieID = ?");
+            $updateSql = $pdo->prepare("UPDATE STUFFEDANIMALSTORE SET InvQty = InvQty + ? WHERE StuffieID = ?");
             $updateSql->execute([$qty, $product]);
             echo "<p>Update complete</p>";
 
@@ -113,7 +113,7 @@ if (isset($_POST['step3'])) && isset($_POST['qty'])) {
             $updatedQTY = $resultStmt->fetch(PDO::FETCH_ASSOC);
 
             $qty = $updatedQTY['InvQty'];
-            $ProductName = $_POST['ProductName'];
+            $ProductName = $updatedQTY['ProductName'];
 
             echo "<p>Product: $ProductName now has QTY of: $qty</p>";
 
@@ -132,7 +132,8 @@ if (isset($_POST['step3'])) && isset($_POST['qty'])) {
                     $count = 0;
                     while ($row = $orderlist->fetch()) 
                     {
-                        echo "<option value='{$row['TrackingID']}'>Order ++$count</option>";
+                        $count++;
+                        echo "<option value='{$row['TrackingID']}'>Order $count</option>";
                         
                     }
                 ?>
@@ -141,7 +142,7 @@ if (isset($_POST['step3'])) && isset($_POST['qty'])) {
             <label>Select a status:</label>
             <select name="status">
                 <?php
-                    $orderstatus = $pdo->query("SELECT OrderStatus FROM ORDERS");
+                    $orderstatus = $pdo->query("SELECT DISTINCT OrderStatus FROM ORDERS");
                     while ($row = $orderstatus->fetch()) 
                     {
                         echo "<option value='{$row['OrderStatus']}'>{$row['OrderStatus']}</option>";
@@ -150,7 +151,18 @@ if (isset($_POST['step3'])) && isset($_POST['qty'])) {
             </select>
 
         <input type="submit" name="submitupdateorder" value="update order">
-            
+    <?php
+        if (isset($_POST['submitupdateorder'])) {
+        $order = $_POST['order'];
+        $status = $_POST['status'];
+
+        $update = $pdo->prepare("UPDATE ORDERS SET OrderStatus = ? WHERE TrackingID = ?");
+        $update->execute([$status, $order]);
+
+        echo "<p><b>Order Updated!<b></p>";
+            }
+    ?>
+        
         
         <!-- Step 4 Make a image to return -->
         <style>
