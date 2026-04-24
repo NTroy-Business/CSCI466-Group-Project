@@ -197,10 +197,10 @@ if (isset($_POST['step3']) && isset($_POST['qty'])) {
 
             
         </style>
-        
+        <!--
         <a = href="https://students.cs.niu.edu/~z1977897/gpstore.php" class="store-button">
             Store Home
         </a>
-        
+        -->
     </body>
 </html>
