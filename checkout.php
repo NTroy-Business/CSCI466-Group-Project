@@ -261,6 +261,13 @@ $PriceArray = [];
     <h1 style="text-align:center">THIS WILL BE YOUR TRACKING ID, PLEASE KEEP NOTE OF IT:</h1>
     <h1 style="text-align:center"><?php echo $TrackID; ?></h1>
 
+<?php if (!empty($errorMessage)): ?>
+    <p style="color:red; font-size:20px; text-align:center;">
+        <?= $errorMessage ?>
+    </p>
+<?php endif; ?>
+
+
     <form method="POST" class="track-form">
     <input type="text" placeholder="CC (16 digits)" name="Credit_Card" required>
     <input type="text" placeholder="ShipAddr" name="Ship_Add" required>
