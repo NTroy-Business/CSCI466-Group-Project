@@ -1,3 +1,6 @@
+ <?php
+        require_once "storedCreds.php";
+    ?>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -198,24 +201,10 @@ h1 {
 <?php
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
-/*
-=====================CHANGE____CREDS=====================
-=====================CHANGE____CREDS=====================
-=====================CHANGE____CREDS=====================
-=====================CHANGE____CREDS=====================
-
-UPDATE THE CREDENTIALS HERE
-
-=====================CHANGE____CREDS=====================
-=====================CHANGE____CREDS=====================
-=====================CHANGE____CREDS=====================
-=====================CHANGE____CREDS=====================
-*/
 try {
-    $username = "z2054630"; //MAKE UR USERNAME
-    $password = "2006Oct12"; // MAKE UR USERNAME
-    $dsn = "mysql:host=courses;dbname=z2054630"; // CHANGE Z_ID
-    $pdo = new PDO($dsn, $username, $password);
+    $pdo = new PDO($stored_database, $stored_user, $stored_pass);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 } catch (PDOException $e) {
