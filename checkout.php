@@ -164,20 +164,23 @@ body {
 
 <?php
 session_start();
+$TrackID = session_id(); 
 
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-
-$TrackID = session_id(); 
-
 $TotalPrice = 0.00;
-$sqlPrepared = $pdo->prepare("SELECT StuffieID FROM SHOPPINGCART WHERE TrackingID = ?"); //where trackingID = SessionID
+
+$sqlPrepared = $pdo->prepare("
+        SELECT STUFFEDANIMALSTORE.StuffieID, STUFFEDANIMALSTORE.Price, SHOPPINGCART.CartQty
+        FROM SHOPPINGCART 
+        JOIN STUFFEDANIMALSTORE 
+        ON SHOPPINGCART.StuffieID = STUFFEDANIMALSTORE.StuffieID
+        WHERE SHOPPINGCART.TrackingID = ? 
+"); // TrackingID = SessionID
+
 $sqlPrepared->execute([$TrackID]);
-
-$sqlPrepared2 = $pdo->prepare('SELECT Price FROM STUFFEDANIMALSTORE WHERE StuffieID = ?');
-
-$StuffieIDs = $sqlPrepared->fetchAll(PDO::FETCH_COLUMN);
+$cartItems = $sqlPrepared->fetchAll(PDO::FETCH_ASSOC);
 
 $PriceArray = [];
 
@@ -189,12 +192,14 @@ $PriceArray = [];
     <?php
     
     $DefaultStatus = "Processing";
-    foreach($StuffieIDs as $SID) {
-        $sqlPrepared2->execute([$SID]);
-        $Price = (float)$sqlPrepared2->fetchColumn();
-        $PriceArray[] = number_format($Price, 2, '.', ''); //adds current Price into the array to be used and formatted later
-        $TotalPrice += $Price;
-        
+    foreach($cartItems as $item) {
+        $Price = (float)$item['Price'];
+        $Qty = (int)$item['CartQty'];
+		
+	$lineTotal = $Price * $Qty;
+
+	$PriceArray[] = number_format($lineTotal, 2, '.', ''); // Adds current Price into the array to be used and formatted later
+	$TotalPrice += $lineTotal;
         
     }
         $FormatTotal = number_format($TotalPrice, 2, '.', '');
