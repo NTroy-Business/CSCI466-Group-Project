@@ -85,12 +85,14 @@ if (isset($_POST['step2']) && isset($_POST['qty'])) {
 
     if(!$product) {
         echo "No Product Selected";
+        return;
     }
     
     $qty = filter_input(INPUT_POST, 'qty', FILTER_VALIDATE_INT);
 
-    if($qty == false || $qty == null) {
+    if($qty === false || $qty === null) {
         echo "Invalid Qty Input";
+        return;
     }
 
     $checkStmt = $pdo->prepare("SELECT InvQty FROM STUFFEDANIMALSTORE WHERE StuffieID = ?");
@@ -105,9 +107,11 @@ if (isset($_POST['step2']) && isset($_POST['qty'])) {
 
         if($qty <= 0) {
             echo "Invalid Qty amount";
+            return;
             }
         else if($qty > 9999) {
             echo "Invalid Qty amount exceeds InvQty";
+            return;
             }
         else {
             $updateSql = $pdo->prepare("UPDATE STUFFEDANIMALSTORE SET InvQty = InvQty + ? WHERE StuffieID = ?");
