@@ -88,7 +88,7 @@ if (isset($_POST['step2']) && isset($_POST['qty'])) {
 
     $qty = filter_input(INPUT_POST, 'qty', FILTER_VALIDATE_INT);
 
-    if(!$qty) {
+    if($qty === false || $qty === null) {
         echo "<p style='color:red'>Invalid Qty Input</p>";
         $check = false;
         }
@@ -98,7 +98,7 @@ if (isset($_POST['step2']) && isset($_POST['qty'])) {
         $check = false;
     }
     
-
+if($check) {
     $checkStmt = $pdo->prepare("SELECT InvQty FROM STUFFEDANIMALSTORE WHERE StuffieID = ?");
     $checkStmt->execute([$product]);
     $answer2 = $checkStmt->fetch(PDO::FETCH_ASSOC);
@@ -118,7 +118,7 @@ if (isset($_POST['step2']) && isset($_POST['qty'])) {
             $check = false;
             }
         else { 
-            if($check) {
+            
             $updateSql = $pdo->prepare("UPDATE STUFFEDANIMALSTORE SET InvQty = InvQty + ? WHERE StuffieID = ?");
             $updateSql->execute([$qty, $product]);
             echo "<p style='color:green;'>Update complete</p>";
