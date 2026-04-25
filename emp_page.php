@@ -213,7 +213,7 @@ echo "<h1><b>All Orders:</b></h1>";
             $resultStmt = $pdo->prepare("SELECT OrderStatus FROM ORDERS WHERE TrackingID = ?");
             $resultStmt->execute([$order]);
             $updatedOrder = $resultStmt->fetch(PDO::FETCH_ASSOC);
-            if(updatedOrder) {
+            if($updatedOrder) {
             $updateStatus = $updatedOrder['OrderStatus'];
 
             echo "<p><b>Order: $order now has OrderStatus of: $updateStatus</b></p>"; 
