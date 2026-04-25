@@ -94,7 +94,7 @@ if (isset($_POST['step2']) && isset($_POST['qty'])) {
         }
     
     if(!$product) {
-        echo "No Product Selected";
+        echo "<p style='color:red'>No Product Selected</p>";
         $check = false;
     }
     
@@ -111,11 +111,11 @@ if($check) {
 
         if($qty <= 0) {
             echo "<p style='color:red'>Invalid Qty amount</p>";
-            $check = false;
+            
             }
         else if($qty > 9999) {
             echo "<p style='color:red'>Invalid Qty amount exceeds InvQty</p>";
-            $check = false;
+            
             }
         else { 
             
@@ -137,7 +137,7 @@ if($check) {
     }
 
     #Step 3 Create a display of all Orders
-
+echo "<h1><b>All Orders:</b></h1>";
      $step3 = "SELECT TrackingID, OrderStatus, ShippingAddr, BillingAddr FROM ORDERS;";
 
            $result3 = $pdo->query($step3);
