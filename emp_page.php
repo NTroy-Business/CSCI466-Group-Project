@@ -25,7 +25,7 @@ Table names: ORDERS, STUFFEDANIMALSTORE, REQUESTS, SHOPPINGCART
                 $pdo = new PDO($dsn, $username, $passwd);
                 }
 
-            catch(PDOexception $e) {
+            catch(PDOException $e) {
                 echo "Connection failed " . $e->getmessage();
                 exit();
                 }
@@ -103,7 +103,7 @@ if (isset($_POST['step2']) && isset($_POST['qty'])) {
             echo "Invalid Qty amount exceeds InvQty";
             }
         else {
-            $updateSql = $pdo->prepare("UPDATE STUFFEDANIMALSTORE SET InvQty = InvQty + ? WHERE StuffieID = ?");
+            $updateSql = $pdo->prepare("UPDATE STUFFEDANIMALSTORE SET InvQty = $currentQTY + ? WHERE StuffieID = ?");
             $updateSql->execute([$qty, $product]);
             echo "<p>Update complete</p>";
 
@@ -122,9 +122,9 @@ if (isset($_POST['step2']) && isset($_POST['qty'])) {
 
     #Step 3 Create a display of all Orders
 
-     $step3 = "SELECT TrackingID, OrderStatus, ShippingAddr, BillingAddr FROM STUFFEDANIMALSTORE;";
+     $step3 = "SELECT TrackingID, OrderStatus, ShippingAddr, BillingAddr FROM ORDERS;";
 
-           $result3 = $pdo->query($step1);
+           $result3 = $pdo->query($step3);
            $answer3 = $result3->fetchAll(PDO::FETCH_ASSOC);
 
            echo "<table border='3'>";
@@ -151,7 +151,7 @@ if (isset($_POST['step2']) && isset($_POST['qty'])) {
 
     #Step 4 Change the Order Status accordingly    
 ?>      
-<h2>Update order status of any order</h2>
+<h2><b></b>Update order status of any order</b></h2>
     <form method="POST">
         <label>Select an order:</label>
             <select name="order">
@@ -167,7 +167,7 @@ if (isset($_POST['step2']) && isset($_POST['qty'])) {
                 ?>
             </select>
 
-            <label>Select a status:</label>
+            <label><b>Select a status:</b></label>
             <select name="status">
                 <?php
                     $orderstatus = $pdo->query("SELECT DISTINCT OrderStatus FROM ORDERS");
@@ -179,6 +179,7 @@ if (isset($_POST['step2']) && isset($_POST['qty'])) {
             </select>
 
         <input type="submit" name="submitupdateorder" value="update order">
+    </form>
     <?php
         if (isset($_POST['submitupdateorder'])) {
         $order = $_POST['order'];
@@ -218,17 +219,17 @@ if (isset($_POST['step2']) && isset($_POST['qty'])) {
                 text-align: center;
 }
             
-.top-right-btn:hover {
+.store-button:hover {
     background-color: deeppink;
     transform: scale(1.05);
 }
 
             
         </style>
-        <!--
+        
         <a = href="https://students.cs.niu.edu/~z1977897/gpstore.php" class="store-button">
             Store Home
         </a>
-        -->
+        
     </body>
 </html>
