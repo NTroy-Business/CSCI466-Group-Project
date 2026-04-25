@@ -2,6 +2,7 @@
 Employee Page
 Allows the viewer to alter quantity
 Table names: ORDERS, STUFFEDANIMALSTORE, REQUESTS, SHOPPINGCART
+Allows the viewer to change status of orders
 -->
 
 <html>
@@ -84,17 +85,24 @@ if (isset($_POST['step2']) && isset($_POST['qty'])) {
     $product = $_POST['product'] ?? null;
 
     $check = true;
+
+    $qty = filter_input(INPUT_POST, 'qty', FILTER_VALIDATE_INT);
+
+    if(!$qty) {
+        echo "<p style='color:red'>Invalid Qty Input</p>";
+        $check = false;
+        }
     
     if(!$product) {
         echo "No Product Selected";
         $check = false;
     }
     
-if(!$check) {
+
     $checkStmt = $pdo->prepare("SELECT InvQty FROM STUFFEDANIMALSTORE WHERE StuffieID = ?");
     $checkStmt->execute([$product]);
     $answer2 = $checkStmt->fetch(PDO::FETCH_ASSOC);
-}
+
 
         if(!$answer2) {
         echo "Invalid Request";
@@ -103,13 +111,14 @@ if(!$check) {
 
         if($qty <= 0) {
             echo "<p style='color:red'>Invalid Qty amount</p>";
-            return;
+            $check = false;
             }
         else if($qty > 9999) {
             echo "<p style='color:red'>Invalid Qty amount exceeds InvQty</p>";
-            return;
+            $check = false;
             }
-        else {
+        else { 
+            if($check) {
             $updateSql = $pdo->prepare("UPDATE STUFFEDANIMALSTORE SET InvQty = InvQty + ? WHERE StuffieID = ?");
             $updateSql->execute([$qty, $product]);
             echo "<p style='color:green;'>Update complete</p>";
@@ -122,7 +131,7 @@ if(!$check) {
             $ProductName = $updatedQTY['ProductName'];
 
             echo "<p><b>Product: $ProductName now has QTY of: $qty</b></p>";
-
+                }
             }
         }
     }
