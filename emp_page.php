@@ -31,6 +31,33 @@ Allows the viewer to change status of orders
                 exit();
                 }
 
+           #Step 1 Create a list of all the products in a Table format
+           $step1 = "SELECT StuffieID, ProductName, ProductSize, Price, InvQty FROM STUFFEDANIMALSTORE;";
+
+           $result1 = $pdo->query($step1);
+           $answer1 = $result1->fetchAll(PDO::FETCH_ASSOC);
+
+           echo "<table border='3'>";
+           echo "<tr>";
+
+
+            if (!empty($answer1)) {
+                foreach($answer1[0] as $key => $value) {
+                    echo "<th>" . htmlspecialchars($key) . "</th>";
+                    }
+            }
+            echo "</tr>";
+            #print rows
+                foreach($answer1 as $row) {
+                    echo "<tr>";
+                foreach($row as $value) {
+                    echo "<td>" . htmlspecialchars($value) . "</td>";
+                    }
+            echo "</tr>";
+        }
+
+      echo "</table>";
+
        #Step 2 Allow the user to alter the InvQty of the products
        echo "<h1><b>Alter The QTY of Any Product!</b></h1>";
 
@@ -109,24 +136,25 @@ if($check) {
         }
     }
 
- #Step 1 Create a list of all the products in a Table format
-           $step1 = "SELECT StuffieID, ProductName, ProductSize, Price, InvQty FROM STUFFEDANIMALSTORE;";
+    #Step 3 Create a display of all Orders
+echo "<h1><b>All Orders:</b></h1>";
+     $step3 = "SELECT TrackingID, OrderStatus, ShippingAddr, BillingAddr FROM ORDERS;";
 
-           $result1 = $pdo->query($step1);
-           $answer1 = $result1->fetchAll(PDO::FETCH_ASSOC);
+           $result3 = $pdo->query($step3);
+           $answer3 = $result3->fetchAll(PDO::FETCH_ASSOC);
 
            echo "<table border='3'>";
            echo "<tr>";
 
 
-            if (!empty($answer1)) {
-                foreach($answer1[0] as $key => $value) {
+            if (!empty($answer3)) {
+                foreach($answer3[0] as $key => $value) {
                     echo "<th>" . htmlspecialchars($key) . "</th>";
                     }
             }
             echo "</tr>";
             #print rows
-                foreach($answer1 as $row) {
+                foreach($answer3 as $row) {
                     echo "<tr>";
                 foreach($row as $value) {
                     echo "<td>" . htmlspecialchars($value) . "</td>";
@@ -135,6 +163,7 @@ if($check) {
         }
 
       echo "</table>";
+    
 
     #Step 4 Change the Order Status accordingly    
 ?>      
@@ -177,36 +206,7 @@ if($check) {
 
         echo "<p style='color:green;'><b>Order Updated!</b></p>";
             }
-
-    #Step 3 Create a display of all Orders
-    echo "<h1><b>All Orders:</b></h1>";
-     $step3 = "SELECT TrackingID, OrderStatus, ShippingAddr, BillingAddr FROM ORDERS;";
-
-           $result3 = $pdo->query($step3);
-           $answer3 = $result3->fetchAll(PDO::FETCH_ASSOC);
-
-           echo "<table border='3'>";
-           echo "<tr>";
-
-
-            if (!empty($answer3)) {
-                foreach($answer3[0] as $key => $value) {
-                    echo "<th>" . htmlspecialchars($key) . "</th>";
-                    }
-            }
-            echo "</tr>";
-            #print rows
-                foreach($answer3 as $row) {
-                    echo "<tr>";
-                foreach($row as $value) {
-                    echo "<td>" . htmlspecialchars($value) . "</td>";
-                    }
-            echo "</tr>";
-        }
-
-      echo "</table>";
-            
-            ?>
+    ?>
         
         
         <!-- Step 5 Make a image to return -->
