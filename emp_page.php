@@ -81,8 +81,17 @@ Table names: ORDERS, STUFFEDANIMALSTORE, REQUESTS, SHOPPINGCART
 
 #Check if there was an answer submitted
 if (isset($_POST['step2']) && isset($_POST['qty'])) {
-    $product = $_POST['product'];
-    $qty = isset($_POST['qty']) ? $_POST['qty'] : null;
+    $product = $_POST['product'] ?? null;
+
+    if(!$product) {
+        echo "No Product Selected";
+    }
+    
+    $qty = filter_input(INPUT_POST, 'qty', FILTER_VALIDATE_INT);
+
+    if($qty == false || $qty == null) {
+        echo "Invalid Qty Input";
+    }
 
     $checkStmt = $pdo->prepare("SELECT InvQty FROM STUFFEDANIMALSTORE WHERE StuffieID = ?");
     $checkStmt->execute([$product]);
@@ -94,8 +103,6 @@ if (isset($_POST['step2']) && isset($_POST['qty'])) {
         }
     else {
 
-        $currentQTY = $answer2['InvQty'];
-
         if($qty <= 0) {
             echo "Invalid Qty amount";
             }
@@ -103,7 +110,7 @@ if (isset($_POST['step2']) && isset($_POST['qty'])) {
             echo "Invalid Qty amount exceeds InvQty";
             }
         else {
-            $updateSql = $pdo->prepare("UPDATE STUFFEDANIMALSTORE SET InvQty = $currentQTY + ? WHERE StuffieID = ?");
+            $updateSql = $pdo->prepare("UPDATE STUFFEDANIMALSTORE SET InvQty = InvQty + ? WHERE StuffieID = ?");
             $updateSql->execute([$qty, $product]);
             echo "<p>Update complete</p>";
 
@@ -151,7 +158,7 @@ if (isset($_POST['step2']) && isset($_POST['qty'])) {
 
     #Step 4 Change the Order Status accordingly    
 ?>      
-<h2><b></b>Update order status of any order</b></h2>
+<h2><b>Update order status of any order</b></h2>
     <form method="POST">
         <label>Select an order:</label>
             <select name="order">
@@ -227,7 +234,7 @@ if (isset($_POST['step2']) && isset($_POST['qty'])) {
             
         </style>
         
-        <a = href="https://students.cs.niu.edu/~z1977897/gpstore.php" class="store-button">
+        <a href="https://students.cs.niu.edu/~z1977897/gpstore.php" class="store-button">
             Store Home
         </a>
         
