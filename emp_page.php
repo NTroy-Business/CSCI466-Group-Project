@@ -198,9 +198,14 @@ echo "<h1><b>All Orders:</b></h1>";
     </form>
     <?php
         if (isset($_POST['submitupdateorder'])) {
-        $order = $_POST['order'];
-        $status = $_POST['status'];
+        $order = $_POST['order'] ?? null;
+        $status = $_POST['status'] ?? null;
 
+            if(!$order || !$status) {
+                echo "<p style='color:red'><b>Missing order or status</b></p>";
+                return;
+            }
+        
         $update = $pdo->prepare("UPDATE ORDERS SET OrderStatus = ? WHERE TrackingID = ?");
         $update->execute([$status, $order]);
 
@@ -208,8 +213,6 @@ echo "<h1><b>All Orders:</b></h1>";
         {   
         echo "<p style='color:green;'><b>Order Updated!</b></p>";
         
-        
-
             $resultStmt = $pdo->prepare("SELECT OrderStatus FROM ORDERS WHERE TrackingID = ?");
             $resultStmt->execute([$order]);
             $updatedOrder = $resultStmt->fetch(PDO::FETCH_ASSOC);
