@@ -31,7 +31,7 @@ Table names: ORDERS, STUFFEDANIMALSTORE, REQUESTS, SHOPPINGCART
                 }
 
            #Step 1 Create a list of all the products in a Table format
-           $step1 = "SELECT StuffieID, ProductName, Price, InvQty FROM STUFFEDANIMALSTORE;";
+           $step1 = "SELECT StuffieID, ProductName, ProductSize, Price, InvQty FROM STUFFEDANIMALSTORE;";
 
            $result1 = $pdo->query($step1);
            $answer1 = $result1->fetchAll(PDO::FETCH_ASSOC);
@@ -76,25 +76,25 @@ Table names: ORDERS, STUFFEDANIMALSTORE, REQUESTS, SHOPPINGCART
         echo "<br/>";
         echo "How Many of That Specific Item to Restock?<input type='number' name='qty'>";
 
-        echo "<input type='submit' name='step3' value='Add to InvQty'>";
+        echo "<input type='submit' name='step2' value='Add to InvQty'>";
     echo "</form>";
 
 #Check if there was an answer submitted
-if (isset($_POST['step3']) && isset($_POST['qty'])) {
+if (isset($_POST['step2']) && isset($_POST['qty'])) {
     $product = $_POST['product'];
     $qty = isset($_POST['qty']) ? $_POST['qty'] : null;
 
     $checkStmt = $pdo->prepare("SELECT InvQty FROM STUFFEDANIMALSTORE WHERE StuffieID = ?");
     $checkStmt->execute([$product]);
-    $answer3 = $checkStmt->fetch(PDO::FETCH_ASSOC);
+    $answer2 = $checkStmt->fetch(PDO::FETCH_ASSOC);
 
 
-        if(!$answer3) {
+        if(!$answer2) {
         echo "Invalid Request";
         }
     else {
 
-        $currentQTY = $answer3['InvQty'];
+        $currentQTY = $answer2['InvQty'];
 
         if($qty <= 0) {
             echo "Invalid Qty amount";
@@ -120,7 +120,36 @@ if (isset($_POST['step3']) && isset($_POST['qty'])) {
         }
     }
 
-    #Step 3 Create a display of all Orders and change the Order Status accordingly
+    #Step 3 Create a display of all Orders
+
+     $step3 = "SELECT TrackingID, OrderStatus, ShippingAddr, BillingAddr FROM STUFFEDANIMALSTORE;";
+
+           $result3 = $pdo->query($step1);
+           $answer3 = $result3->fetchAll(PDO::FETCH_ASSOC);
+
+           echo "<table border='3'>";
+           echo "<tr>";
+
+
+            if (!empty($answer3)) {
+                foreach($answer3[0] as $key => $value) {
+                    echo "<th>$key</th>";
+                    }
+            }
+            echo "</tr>";
+            #print rows
+                foreach($answer3 as $row) {
+                    echo "<tr>";
+                foreach($row as $value) {
+                    echo "<td>$value</td>";
+                    }
+            echo "</tr>";
+        }
+
+      echo "</table>";
+    
+
+    #Step 4 Change the Order Status accordingly    
 ?>      
 <h2>Update order status of any order</h2>
     <form method="POST">
