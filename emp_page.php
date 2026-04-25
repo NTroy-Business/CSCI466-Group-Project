@@ -81,7 +81,7 @@ Allows the viewer to change status of orders
     echo "</form>";
 
 #Check if there was an answer submitted
-if (isset($_POST['step2']) && isset($_POST['qty'])) {
+if (isset($_POST['step2'])) {
     $product = $_POST['product'] ?? null;
 
     $check = true;
