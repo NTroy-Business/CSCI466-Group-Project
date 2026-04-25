@@ -42,7 +42,7 @@ Table names: ORDERS, STUFFEDANIMALSTORE, REQUESTS, SHOPPINGCART
 
             if (!empty($answer1)) {
                 foreach($answer1[0] as $key => $value) {
-                    echo "<th>$key</th>";
+                    echo "<th>" . htmlspecialchars($key) . "</th>";
                     }
             }
             echo "</tr>";
@@ -50,7 +50,7 @@ Table names: ORDERS, STUFFEDANIMALSTORE, REQUESTS, SHOPPINGCART
                 foreach($answer1 as $row) {
                     echo "<tr>";
                 foreach($row as $value) {
-                    echo "<td>$value</td>";
+                    echo "<td>" . htmlspecialchars($value) . "</td>";
                     }
             echo "</tr>";
         }
@@ -83,22 +83,18 @@ Table names: ORDERS, STUFFEDANIMALSTORE, REQUESTS, SHOPPINGCART
 if (isset($_POST['step2']) && isset($_POST['qty'])) {
     $product = $_POST['product'] ?? null;
 
+    $check = true;
+    
     if(!$product) {
         echo "No Product Selected";
-        return;
+        $check = false;
     }
     
-    $qty = filter_input(INPUT_POST, 'qty', FILTER_VALIDATE_INT);
-
-    if($qty === false || $qty === null) {
-        echo "Invalid Qty Input";
-        return;
-    }
-
+if(!$check) {
     $checkStmt = $pdo->prepare("SELECT InvQty FROM STUFFEDANIMALSTORE WHERE StuffieID = ?");
     $checkStmt->execute([$product]);
     $answer2 = $checkStmt->fetch(PDO::FETCH_ASSOC);
-
+}
 
         if(!$answer2) {
         echo "Invalid Request";
@@ -106,17 +102,17 @@ if (isset($_POST['step2']) && isset($_POST['qty'])) {
     else {
 
         if($qty <= 0) {
-            echo "Invalid Qty amount";
+            echo "<p style='color:red'>Invalid Qty amount</p>";
             return;
             }
         else if($qty > 9999) {
-            echo "Invalid Qty amount exceeds InvQty";
+            echo "<p style='color:red'>Invalid Qty amount exceeds InvQty</p>";
             return;
             }
         else {
             $updateSql = $pdo->prepare("UPDATE STUFFEDANIMALSTORE SET InvQty = InvQty + ? WHERE StuffieID = ?");
             $updateSql->execute([$qty, $product]);
-            echo "<p>Update complete</p>";
+            echo "<p style='color:green;'>Update complete</p>";
 
             $resultStmt = $pdo->prepare("SELECT ProductName, InvQty FROM STUFFEDANIMALSTORE WHERE StuffieID = ?");
             $resultStmt->execute([$product]);
@@ -125,7 +121,7 @@ if (isset($_POST['step2']) && isset($_POST['qty'])) {
             $qty = $updatedQTY['InvQty'];
             $ProductName = $updatedQTY['ProductName'];
 
-            echo "<p>Product: $ProductName now has QTY of: $qty</p>";
+            echo "<p><b>Product: $ProductName now has QTY of: $qty</b></p>";
 
             }
         }
@@ -144,7 +140,7 @@ if (isset($_POST['step2']) && isset($_POST['qty'])) {
 
             if (!empty($answer3)) {
                 foreach($answer3[0] as $key => $value) {
-                    echo "<th>$key</th>";
+                    echo "<th>" . htmlspecialchars($key) . "</th>";
                     }
             }
             echo "</tr>";
@@ -152,7 +148,7 @@ if (isset($_POST['step2']) && isset($_POST['qty'])) {
                 foreach($answer3 as $row) {
                     echo "<tr>";
                 foreach($row as $value) {
-                    echo "<td>$value</td>";
+                    echo "<td>" . htmlspecialchars($value) . "</td>";
                     }
             echo "</tr>";
         }
@@ -199,7 +195,7 @@ if (isset($_POST['step2']) && isset($_POST['qty'])) {
         $update = $pdo->prepare("UPDATE ORDERS SET OrderStatus = ? WHERE TrackingID = ?");
         $update->execute([$status, $order]);
 
-        echo "<p><b>Order Updated!</b></p>";
+        echo "<p style='color:green;'><b>Order Updated!</b></p>";
             }
     ?>
         
