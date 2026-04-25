@@ -204,8 +204,26 @@ echo "<h1><b>All Orders:</b></h1>";
         $update = $pdo->prepare("UPDATE ORDERS SET OrderStatus = ? WHERE TrackingID = ?");
         $update->execute([$status, $order]);
 
+        if($update->rowCount() > 0)
+        {   
         echo "<p style='color:green;'><b>Order Updated!</b></p>";
+        
+        
+
+            $resultStmt = $pdo->prepare("SELECT OrderStatus FROM ORDERS WHERE TrackingID = ?");
+            $resultStmt->execute([$order]);
+            $updatedOrder = $resultStmt->fetch(PDO::FETCH_ASSOC);
+            if(updatedOrder) {
+            $updateStatus = $updatedOrder['OrderStatus'];
+
+            echo "<p><b>Order: $order now has OrderStatus of: $updateStatus</b></p>"; 
             }
+        }
+         else {
+            echo "<p style='color:red;'><b>No Update Applied (same status or invalid order)</b></p>";
+              }
+        }
+            
     ?>
         
         
