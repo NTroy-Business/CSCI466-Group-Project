@@ -203,7 +203,7 @@ echo "<h1><b>All Orders:</b></h1>";
 
             if(!$order || !$status) {
                 echo "<p style='color:red'><b>Missing order or status</b></p>";
-                return;
+                exit;
             }
         
         $update = $pdo->prepare("UPDATE ORDERS SET OrderStatus = ? WHERE TrackingID = ?");
