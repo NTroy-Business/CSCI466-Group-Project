@@ -13,7 +13,7 @@ catch(PDOException $e)
 }
 
 session_start();
-$trackingID = session_id();
+$TrackingID = session_id();
 
 if(isset($_POST['addtocart']))
 {
@@ -29,7 +29,7 @@ if(isset($_POST['addtocart']))
 
     // Check if item is already in the user's cart
     $statement = $pdo->prepare("SELECT CartQty FROM SHOPPINGCART WHERE TrackingID = ? AND StuffieID = ?");
-    $statement->execute([$trackingID, $stuffieID]);
+    $statement->execute([$TrackingID, $stuffieID]);
     $row = $statement->fetch();
 
     if ($row)
@@ -47,7 +47,7 @@ if(isset($_POST['addtocart']))
         {
 	    // Update cart with checked quantity
             $stmt = $pdo->prepare("UPDATE SHOPPINGCART SET CartQty = ? WHERE TrackingID = ? AND StuffieID = ?");
-            $stmt->execute([$newQty, $trackingID, $stuffieID]);
+            $stmt->execute([$newQty, $TrackingID, $stuffieID]);
         }
     }
     else
@@ -61,7 +61,7 @@ if(isset($_POST['addtocart']))
         {
             // Insert new item into cart with quantity of 1
             $stmt = $pdo->prepare("INSERT INTO SHOPPINGCART (TrackingID, StuffieID, CartQty) VALUES (?, ?, 1)");
-            $stmt->execute([$trackingID, $stuffieID]);
+            $stmt->execute([$TrackingID, $stuffieID]);
         }
     }
 }
