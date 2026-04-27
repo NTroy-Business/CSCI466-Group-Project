@@ -194,7 +194,7 @@ h1 {
         width: auto;
         max-width: 200px;
         height: auto;          /* allow full height */
-        max-height: 255px
+        max-height: 255px;
         aspect-ratio: auto;    /* remove forced ratio */
         object-fit: contain;   /* show entire image */
     }
