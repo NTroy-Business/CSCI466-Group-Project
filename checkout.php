@@ -164,7 +164,7 @@ body {
 
 <?php
 session_start();
-$TrackID = session_id(); 
+$TrackingID = session_id(); 
 
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
@@ -179,7 +179,7 @@ $sqlPrepared = $pdo->prepare("
         WHERE SHOPPINGCART.TrackingID = ? 
 "); // TrackingID = SessionID
 
-$sqlPrepared->execute([$TrackID]);
+$sqlPrepared->execute([$TrackingID]);
 $cartItems = $sqlPrepared->fetchAll(PDO::FETCH_ASSOC);
 
 $PriceArray = [];
@@ -227,7 +227,7 @@ $PriceArray = [];
         ");
 
         $sqlInsert->execute([
-            $TrackID,
+            $TrackingID,
             $DefaultStatus,
             $TotalPrice,
             $CreditCard,
@@ -236,7 +236,7 @@ $PriceArray = [];
         ]);
 
         session_regenerate_id(true);
-        echo $TrackID;
+        echo $TrackingID;
 
         // Redirect ONLY after successful insert
         header("Location: trackpage.php?success=1");
@@ -264,7 +264,7 @@ $PriceArray = [];
 </div>
 <?php if ($TotalPrice > 0): ?>
     <h1 style="text-align:center">THIS WILL BE YOUR TRACKING ID, PLEASE KEEP NOTE OF IT:</h1>
-    <h1 style="text-align:center"><?php echo $TrackID; ?></h1>
+    <h1 style="text-align:center"><?php echo $TrackingID; ?></h1>
 
 <?php if (!empty($errorMessage)): ?>
     <p style="color:red; font-size:20px; text-align:center;">
