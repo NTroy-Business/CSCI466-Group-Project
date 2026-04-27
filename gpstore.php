@@ -169,6 +169,39 @@ if(isset($_POST['addtocart']))
                 background-color: deeppink;
                 transform: scale(1.05);
             }
+
+			.bottom-right-btn
+			{
+				position: fixed;
+                bottom: 20px;
+                right: 15px;
+
+                background-color: hotpink;
+                color: white;
+
+                padding: 10px 16px;
+                border-radius: 10px;
+
+                text-decoration: none;
+                font-weight: bold;
+
+                z-index: 999; /* stays above everything */
+                box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+                transition: 0.3s ease;
+
+                width: 100px;
+                max-width: 200px;
+                text-align: center;
+                font-family:'Nunito', sans-serif;
+			}
+
+			.bottom-right-btn:hover
+			{
+				background-color: deeppink;
+                transform: scale(1.05);
+			}
+				
+			
         </style>
     </head>
 
@@ -179,6 +212,10 @@ if(isset($_POST['addtocart']))
         <h1>Stuffie Store<hr></h1>
         <a href="https://students.cs.niu.edu/~z1977897/shoppingcart.php" class="top-right-btn2">
             My Cart
+        </a>
+
+		 <a href="https://students.cs.niu.edu/~z1977897/emp_page.php" class="bottom-right-btn">
+            Employee Page
         </a>
 
         <table width="75%" border="0">    
