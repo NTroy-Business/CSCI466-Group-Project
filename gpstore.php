@@ -19,22 +19,50 @@ if(isset($_POST['addtocart']))
 {
     $stuffieID=$_POST['stuffie_id'];
 
-    //check if in cart already
+    // Get current inventory quantity for this item
+    $invStmt = $pdo->prepare("SELECT InvQty FROM StuffedAnimalStore WHERE StuffieID = ?");
+    $invStmt->execute([$stuffieID]);
+    $invRow = $invStmt->fetch();
+	
+    // Store inventory quantity for comparison
+    $stockQty = (int)$invRow['InvQty'];
+
+    // Check if item is already in the user's cart
     $statement = $pdo->prepare("SELECT CartQty FROM SHOPPINGCART WHERE TrackingID = ? AND StuffieID = ?");
     $statement->execute([$trackingID, $stuffieID]);
     $row = $statement->fetch();
 
     if ($row)
     {
-        // if it already exists, increase quantity
-        $stmt = $pdo->prepare("UPDATE SHOPPINGCART SET CartQty = CartQty + 1 WHERE TrackingID = ? AND StuffieID = ?");
-        $stmt->execute([$trackingID, $stuffieID]);
+        // Calculate new quantity if one more item is added
+        $currentQty = (int)$row['CartQty'];
+        $newQty = $currentQty + 1;
+
+	// Prevent adding more items than what is available in stock
+        if ($newQty > $stockQty)
+        {
+            echo "Unable to add more than what is in stock. There is currently $stockQty available.";
+        }
+        else
+        {
+	    // Update cart with checked quantity
+            $stmt = $pdo->prepare("UPDATE SHOPPINGCART SET CartQty = ? WHERE TrackingID = ? AND StuffieID = ?");
+            $stmt->execute([$newQty, $trackingID, $stuffieID]);
+        }
     }
     else
     {
-        // if not, insert
-        $stmt = $pdo->prepare("INSERT INTO SHOPPINGCART (TrackingID, StuffieID, CartQty) VALUES (?, ?, 1)");
-        $stmt->execute([$trackingID, $stuffieID]);
+        // Prevent adding item if it is out of stock
+        if ($stockQty < 1)
+        {
+            echo "This item is out of stock.";
+        }
+        else
+        {
+            // Insert new item into cart with quantity of 1
+            $stmt = $pdo->prepare("INSERT INTO SHOPPINGCART (TrackingID, StuffieID, CartQty) VALUES (?, ?, 1)");
+            $stmt->execute([$trackingID, $stuffieID]);
+        }
     }
 }
                 
