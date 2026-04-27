@@ -185,6 +185,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_id']))
 
 		$statement->execute([$TrackingID]);
 
+		if ($statement->rowCount() === 0) {
+			echo "<tr><td colspan='4'>Shopping cart is empty</td></tr>";
+		}
+			
 		while ($row = $statement->fetch())
 		{
 		    echo "<tr>
