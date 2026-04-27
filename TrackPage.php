@@ -223,9 +223,9 @@ error_reporting(E_ALL);
 $order = null;
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $trackingID = $_POST["Track_ID"] ?? "";
+    $TrackingID = $_POST["TrackingID"] ?? "";
 
-    if (!empty($trackingID) && strlen($trackingID) <=128) {
+    if (!empty($TrackingID) && strlen($TrackingID) <=128) {
 
         $stmt = $pdo->prepare("
             SELECT TrackingID, OrderStatus, Total 
@@ -233,7 +233,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             WHERE TrackingID= ?
         ");
 
-        $stmt->execute([$trackingID]);
+        $stmt->execute([$TrackingID]);
         $order = $stmt->fetch(PDO::FETCH_ASSOC);
     }
 }
@@ -260,7 +260,7 @@ function activeStep($status, $steps) {
     <h1>TRACK YOUR ORDER</h1>
 
     <form method="POST" class="track-form">
-        <input type="text" name="Track_ID" maxlength="64" placeholder="Enter Tracking ID" required>
+        <input type="text" name="TrackingID" maxlength="64" placeholder="Enter Tracking ID" required>
         <button type="submit">Track Your Order</button>
     </form>
 
