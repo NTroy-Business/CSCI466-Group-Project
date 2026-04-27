@@ -15,7 +15,7 @@ catch(PDOException $e)
 }
 
 session_start();
-$trackingID = session_id();
+$TrackingID = session_id();
 ?>
 
 <html>
@@ -177,13 +177,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_id']))
 	WHERE TrackingID = ? AND StuffieID = ?
     ");
 
-    $deleteStmt->execute([$trackingID, $removeID]);
+    $deleteStmt->execute([$TrackingID, $removeID]);
 
 	header("Location: https://students.cs.niu.edu/~z1977897/shoppingcart.php");
 	exit;
 }
 
-		$statement->execute([$trackingID]);
+		$statement->execute([$TrackingID]);
 
 		while ($row = $statement->fetch())
 		{
