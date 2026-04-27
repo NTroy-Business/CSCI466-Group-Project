@@ -156,12 +156,12 @@ $trackingID = session_id();
 		<th>Stuffie Name</th>
 		<th>Price</th>
 		<th>Quantity</th>
-		<th>Remove</th>
+		<th></th>
 	    </tr>
 
 <?php
 $statement = $pdo->prepare("
-		    SELECT s.StuffieID s.ProductName, s.Price, c.CartQty
+		    SELECT s.StuffieID, s.ProductName, s.Price, c.CartQty
 		    FROM SHOPPINGCART c
 		    JOIN STUFFEDANIMALSTORE s
 		    ON c.StuffieID = s.StuffieID
@@ -178,6 +178,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_id']))
     ");
 
     $deleteStmt->execute([$trackingID, $removeID]);
+
+	header("Location: https://students.cs.niu.edu/~z1977897/shoppingcart.php");
+	exit;
 }
 
 		$statement->execute([$trackingID]);
@@ -191,8 +194,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_id']))
 			<td>
 			    <form method='POST' style='margin:0;'>
 			    <input type='hidden' name='remove_id' value='{$row['StuffieID']}'>
-			    <button type='submit' class='button1'>X</button>
-			    </form>
+        		<button type='submit' class='button1'>Remove</button>
+				</form>
 			</td>
 			</tr>";
 		}
