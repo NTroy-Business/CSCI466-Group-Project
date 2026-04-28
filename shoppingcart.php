@@ -15,7 +15,7 @@ catch(PDOException $e)
 }
 
 session_start();
-$TrackingID = session_id();
+    $trackingID = session_id();
 ?>
 
 <html>
@@ -177,13 +177,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_id']))
 	WHERE TrackingID = ? AND StuffieID = ?
     ");
 
-    $deleteStmt->execute([$TrackingID, $removeID]);
+    $deleteStmt->execute([$trackingID, $removeID]);
 
 	header("Location: https://students.cs.niu.edu/~z1977897/shoppingcart.php");
 	exit;
 }
 
-		$statement->execute([$TrackingID]);
+		$statement->execute([$trackingID]);
 
 		if ($statement->rowCount() === 0) {
 			echo "<tr><td colspan='4'>Shopping cart is empty</td></tr>";
