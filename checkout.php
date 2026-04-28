@@ -35,61 +35,64 @@ catch(PDOException $e)
 ?>
 
 <?php
-                $DefaultStatus = "Processing";
-                foreach($cartItems as $item)
-                {
-                    $Price = (float)$item['Price'];
-                    $Qty = (int)$item['CartQty'];
-                    
-                    $lineTotal = $Price * $Qty;
+    $DefaultStatus = "Processing";
+    foreach($cartItems as $item)
+    {
+        $Price = (float)$item['Price'];
+        $Qty = (int)$item['CartQty'];
+                        
+        $lineTotal = $Price * $Qty;
 
-                    $PriceArray[] = number_format($lineTotal, 2, '.', ''); // Adds current Price into the array to be used and formatted later
-                    $TotalPrice += $lineTotal;
-                }
+        $PriceArray[] = number_format($lineTotal, 2, '.', ''); // Adds current Price into the array to be used and formatted later
+        $TotalPrice += $lineTotal;
+    }
 
-                $FormatTotal = number_format($TotalPrice, 2, '.', '');
-                $errorMessage = "";
+    $FormatTotal = number_format($TotalPrice, 2, '.', '');
+    $errorMessage = "";
 
-                if ($_SERVER["REQUEST_METHOD"] === "POST")
-                {
+    if ($_SERVER["REQUEST_METHOD"] === "POST")
+    {
 
-                    $CreditCard = $_POST["Credit_Card"] ?? "";
-                    $ShipAdd    = $_POST["Ship_Add"] ?? "";
-                    $BillAdd    = $_POST["Bill_Add"] ?? "";
+        $CreditCard = $_POST["Credit_Card"] ?? "";
+        $ShipAdd    = $_POST["Ship_Add"] ?? "";
+        $BillAdd    = $_POST["Bill_Add"] ?? "";
 
-                    if (!preg_match('/^\d{16}$/', $CreditCard))
-                    {
-                        $errorMessage = "Credit Card must be exactly 16 digits.";
-                    }
-                    elseif (!empty($ShipAdd) &&
-                            !empty($BillAdd) &&
-                            strlen($ShipAdd) <= 128 &&
-                            strlen($BillAdd) <= 128)
-                    {
-                        // Insert the order
-                        $sqlInsert = $pdo->prepare("
-                            INSERT INTO ORDERS (TrackingID, OrderStatus, Total, CCInfo, ShippingAddr, BillingAddr)
-                            VALUES (?, ?, ?, ?, ?, ?)
-                        ");
+        if (!preg_match('/^\d{16}$/', $CreditCard))
+        {
+            $errorMessage = "Credit Card must be exactly 16 digits.";
+        }
+        elseif (!empty($ShipAdd) &&
+                !empty($BillAdd) &&
+                strlen($ShipAdd) <= 128 &&
+                strlen($BillAdd) <= 128)
+        {
+            // Insert the order
+            $sqlInsert = $pdo->prepare("
+                INSERT INTO ORDERS (TrackingID, OrderStatus, Total, CCInfo, ShippingAddr, BillingAddr)
+                VALUES (?, ?, ?, ?, ?, ?)
+            ");
 
-                        $sqlInsert->execute([
-                            $trackingID,
-                            $DefaultStatus,
-                            $TotalPrice,
-                            $CreditCard,
-                            $ShipAdd,
-                            $BillAdd
-                        ]);
+            $sqlInsert->execute([
+                $trackingID,
+                $DefaultStatus,
+                $TotalPrice,
+                $CreditCard,
+                $ShipAdd,
+                $BillAdd
+            ]);
 
-                        session_regenerate_id(true);
-                        echo $trackingID;
+            //remove from inventory
 
-                        // Redirect ONLY after successful insert
-                        header("Location: trackpage.php?success=1");
-                        exit;
-                    }
-                }
-            ?>
+
+            session_regenerate_id(true);
+            echo $trackingID;
+
+            // Redirect ONLY after successful insert
+            header("Location: trackpage.php?success=1");
+            exit;
+        }
+    }
+?>
 
 <!DOCTYPE HTML>
 <html>
