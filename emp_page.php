@@ -8,9 +8,159 @@ Allows the viewer to change status of orders
 <html>
     <head>
         <title>Employee Page Stuffie Store</title>
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+
+        <style>
+            h1 {font-family:'Nunito', sans-serif; color:hotpink; padding: 15px;}
+            p {font-family:'Nunito', sans-serif; color:lightpink; word-break: break-word; margin: 20px;}
+
+            img 
+            {
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+                width: 75%; /* Optional: set a width smaller than the container */
+                border-radius: 10px;
+            }
+            th
+            {
+                border: 1px solid lightgray;
+                word-wrap: break-word;
+                overflow-wrap: break-word;
+                background-color: white;
+                font-family:'Nunito', sans-serif;
+                padding: 5px;
+            }
+            form
+            {
+                border-radius: 10px;
+                border-spacing: 5px;
+                padding: 10px;
+                margin: 20px;
+                background-color: #ffe8f8;
+                font-family:'Nunito', sans-serif;
+            }
+            td
+            {
+                border: 1px solid lightgray;
+                word-wrap: break-word;
+                overflow-wrap: break-word;
+                background-color: white;
+                font-family:'Nunito', sans-serif;
+                padding: 2px 5px;
+            }
+            img:hover 
+            {
+                transform: scale(1.05);
+                transition: 0.3s;
+            }
+            
+            table 
+            {
+                border-radius: 10px;
+                border-spacing: 5px;
+                padding: 10px;
+                margin: 20px;
+                background-color: #ffe8f8;
+            }
+
+            .button 
+            {
+                border: none;
+                color: white;
+                padding: 16px 32px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                margin: 4px 2px;
+                transition-duration: 0.3s;
+                cursor: pointer;
+            }
+
+            .button1 
+            {
+                background-color: white; 
+                color: black; 
+                border: 2px solid hotpink;
+                border-radius: 10px;
+            }
+
+            .button1:hover 
+            {
+                background-color: pink;
+                color: white;
+                border-radius: 10px;
+            }
+
+            .top-right-btn2 
+            {
+                position: fixed;
+                top: 20px;
+                right: 15px;
+
+                background-color: hotpink;
+                color: white;
+
+                padding: 10px 16px;
+                border-radius: 10px;
+
+                text-decoration: none;
+                font-weight: bold;
+
+                z-index: 999; /* stays above everything */
+                box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+                transition: 0.3s ease;
+
+                width: 100px;
+                max-width: 200px;
+                text-align: center;
+                font-family:'Nunito', sans-serif; 
+            }
+
+            .top-right-btn2:hover 
+            {
+                background-color: deeppink;
+                transform: scale(1.05);
+            }
+
+			.bottom-right-btn
+			{
+				position: fixed;
+                bottom: 20px;
+                right: 15px;
+
+                background-color: hotpink;
+                color: white;
+
+                padding: 10px 16px;
+                border-radius: 10px;
+
+                text-decoration: none;
+                font-weight: bold;
+
+                z-index: 999; /* stays above everything */
+                box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+                transition: 0.3s ease;
+
+                width: 100px;
+                max-width: 200px;
+                text-align: center;
+                font-family:'Nunito', sans-serif;
+			}
+
+			.bottom-right-btn:hover
+			{
+				background-color: deeppink;
+                transform: scale(1.05);
+			}
+        </style>
     </head>
 
-    <body>
+    <body style="background-color:Lavender">
         <h1><b>All Products:</b></h1>
 
         <?php
@@ -50,7 +200,7 @@ Allows the viewer to change status of orders
                 }
             }
             echo "</tr>";
-
+            
             #print rows
             foreach($answer1 as $row)
             {
@@ -69,7 +219,6 @@ Allows the viewer to change status of orders
             #Step 2 Allow the user to alter the InvQty of the products
             echo "<h1><b>Alter The QTY of Any Product!</b></h1>";
 
-            echo "<br/>";
             echo "<form method='POST'>";
             echo "<label>Choose a Product:</label>";
             echo "<select name='product' id='product'>";
@@ -89,7 +238,8 @@ Allows the viewer to change status of orders
             echo "</form>";
 
             #Check if there was an answer submitted
-            if (isset($_POST['step2'])) {
+            if (isset($_POST['step2']))
+            {
                 $product = $_POST['product'] ?? null;
 
                 $check = true;
@@ -114,21 +264,19 @@ Allows the viewer to change status of orders
                     $checkStmt->execute([$product]);
                     $answer2 = $checkStmt->fetch(PDO::FETCH_ASSOC);
 
-
                     if(!$answer2)
                     {
                         echo "Invalid Request";
                     }
                     else
                     {
-
                         if($qty <= 0)
                         {
                             echo "<p style='color:red'>Invalid Qty amount</p>";
                         }
                         else if($qty > 9999)
                         {
-                            echo "<p style='color:red'>Invalid Qty amount exceeds InvQty</p>";
+                            echo "<p style='color:red'>Invalid Qty amount exceeds max InvQty</p>";
                         }
                         else
                         {
@@ -157,6 +305,7 @@ Allows the viewer to change status of orders
 
             echo "<table border='3'>";
             echo "<tr>";
+            echo "<th>Order #</th>";
 
             if (!empty($answer3))
             {
@@ -167,10 +316,14 @@ Allows the viewer to change status of orders
             }
 
             echo "</tr>";
+            $count2 = 1;
             #print rows
             foreach($answer3 as $row) 
             {
                 echo "<tr>";
+                echo "<td>" . $count2 . "</td>";
+                $count2++;
+
                 foreach($row as $value)
                 {
                     echo "<td>" . htmlspecialchars($value) . "</td>";
@@ -180,13 +333,12 @@ Allows the viewer to change status of orders
 
             echo "</table>";
         
-
             #Step 4 Change the Order Status accordingly    
         ?>
 
-        <h2><b>Update order status of any order</b></h2>
+        <h1><b>Update order status</b></h1>
             <form method="POST">
-                <label>Select an order:</label>
+                <label><b>Select an order:</b></label>
                     <select name="order">
                         <?php
                             $orderlist = $pdo->query("SELECT TrackingID FROM ORDERS");
@@ -251,40 +403,7 @@ Allows the viewer to change status of orders
             }  
         ?>
         
-        <!-- Step 5 Make a image to return -->
-        <style>
-            .store-button
-            {
-                position: fixed;
-                top: 15px;
-                right: 15px;
-                
-                background-color: hotpink;
-                color: white;
-
-                padding: 10px 16px;
-                border-radius: 10px;
-
-                text-decoration: none;
-                font-weight: bold;
-
-                z-index: 999; /* stays above everything */
-                box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
-                transition: 0.3s ease;
-   
-                width: 100px;
-                max-width: 200px;
-                text-align: center;
-            }
-            
-            .store-button:hover
-            {
-                background-color: deeppink;
-                transform: scale(1.05);
-            }   
-        </style>
-        
-        <a href="https://students.cs.niu.edu/~z1977897/gpstore.php" class="store-button">
+        <a href="https://students.cs.niu.edu/~z1977897/gpstore.php" class="top-right-btn2">
             Store Home
         </a> 
     </body>
