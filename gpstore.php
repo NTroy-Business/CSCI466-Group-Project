@@ -170,6 +170,37 @@
                 transform: scale(1.05);
             }
 
+            .top-right-btn3
+            {
+                position: fixed;
+                top: 10px;
+                right: 160px;
+
+                background-color: hotpink;
+                color: white;
+
+                padding: 10px 16px;
+                border-radius: 10px;
+
+                text-decoration: none;
+                font-weight: bold;
+
+                z-index: 999; /* stays above everything */
+                box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+                transition: 0.3s ease;
+
+                width: 100px;
+                max-width: 200px;
+                text-align: center;
+                font-family:'Nunito', sans-serif; 
+            }
+
+            .top-right-btn3:hover 
+            {
+                background-color: deeppink;
+                transform: scale(1.05);
+            }
+
 			.bottom-right-btn
 			{
 				position: fixed;
@@ -203,8 +234,8 @@
 
             .side-ad {
                 position: fixed;
-                top: 10%;              /* pushes them down a bit */
-                width: 200px;          /* narrow like ads */
+                top: 12%;              /* pushes them down a bit */
+                width: 24vh;           /* narrow like ads */
                 height: 75vh;          /* NOT full page height */
                 object-fit: cover;
                 z-index: 0;
@@ -233,7 +264,11 @@
             My Cart
         </a>
 
-		 <a href="https://students.cs.niu.edu/~z1977897/employee.php" class="bottom-right-btn">
+        <a href="https://students.cs.niu.edu/~z1977897/trackpage.php" class="top-right-btn3">
+            Track Your Package
+        </a>
+
+		<a href="https://students.cs.niu.edu/~z1977897/employee.php" class="bottom-right-btn">
             Employee Page
         </a>
 
