@@ -214,7 +214,7 @@ if(isset($_POST['addtocart']))
             My Cart
         </a>
 
-		 <a href="https://students.cs.niu.edu/~z1977897/emp_page.php" class="bottom-right-btn">
+		 <a href="https://students.cs.niu.edu/~z1977897/employee.php" class="bottom-right-btn">
             Employee Page
         </a>
 
