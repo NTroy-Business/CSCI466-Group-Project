@@ -16,7 +16,6 @@ catch(PDOException $e)
 <!DOCTYPE HTML>
 <html>
     <head>
-
         <title>TrackingPage</title>
         <meta charset="UTF-8">
 
@@ -214,7 +213,6 @@ catch(PDOException $e)
 
             ini_set('display_errors', 1);
             error_reporting(E_ALL);
-
 
             /* =======================
             GET ORDER DATA
