@@ -15,284 +15,280 @@ catch(PDOException $e)
     ?> 
 <!DOCTYPE HTML>
 <html>
-<head>
+    <head>
 
-<title>TrackingPage</title>
-<meta charset="UTF-8">
+        <title>TrackingPage</title>
+        <meta charset="UTF-8">
 
-<style>
+        <style>
+            .top-right-btn {
+                position: fixed;
+                top: 15px;
+                right: 15px;
 
-.top-right-btn {
-    position: fixed;
-    top: 15px;
-    right: 15px;
+                background-color: hotpink;
+                color: white;
 
-    background-color: hotpink;
-    color: white;
+                padding: 10px 16px;
+                border-radius: 10px;
 
-    padding: 10px 16px;
-    border-radius: 10px;
+                text-decoration: none;
+                font-weight: bold;
 
-    text-decoration: none;
-    font-weight: bold;
+                z-index: 999; /* stays above everything */
+                box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+                transition: 0.3s ease;
 
-    z-index: 999; /* stays above everything */
-    box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
-    transition: 0.3s ease;
+            
+                width: 100px;
+                max-width: 200px;
+                text-align: center;
+            }
 
-   
-    width: 100px;
-    max-width: 200px;
-    text-align: center;
-}
+            .top-right-btn:hover {
+                background-color: deeppink;
+                transform: scale(1.05);
+            }
 
-.top-right-btn:hover {
-    background-color: deeppink;
-    transform: scale(1.05);
-}
+            /* ------------------------------
+            Top Button 2 
+            ------------------------------*/
+            .top-right-btn2 {
+                position: fixed;
+                top: 60px;
+                right: 15px;
 
-/* ------------------------------
-Top Button 2 
- ------------------------------*/
-.top-right-btn2 {
-    position: fixed;
-    top: 60px;
-    right: 15px;
+                background-color: hotpink;
+                color: white;
 
-    background-color: hotpink;
-    color: white;
+                padding: 10px 16px;
+                border-radius: 10px;
 
-    padding: 10px 16px;
-    border-radius: 10px;
+                text-decoration: none;
+                font-weight: bold;
 
-    text-decoration: none;
-    font-weight: bold;
+                z-index: 999; /* stays above everything */
+                box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+                transition: 0.3s ease;
 
-    z-index: 999; /* stays above everything */
-    box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
-    transition: 0.3s ease;
+                width: 100px;
+                max-width: 200px;
+                text-align: center;
+            }
 
-    width: 100px;
-    max-width: 200px;
-    text-align: center;
-}
+            .top-right-btn2:hover {
+                background-color: deeppink;
+                transform: scale(1.05);
+            }
+                .side-ad {
+                position: fixed;
+                top: 10%;              /* pushes them down a bit */
+                width: 110px;          /* narrow like ads */
+                height: 75vh;          /* NOT full page height */
+                object-fit: cover;
+                z-index: 0;
+                opacity: 0.85;
+                border-radius: 10px;
+            }
 
-.top-right-btn2:hover {
-    background-color: deeppink;
-    transform: scale(1.05);
-}
-    .side-ad {
-    position: fixed;
-    top: 10%;              /* pushes them down a bit */
-    width: 110px;          /* narrow like ads */
-    height: 75vh;          /* NOT full page height */
-    object-fit: cover;
-    z-index: 0;
-    opacity: 0.85;
-    border-radius: 10px;
-}
+            .ad-left {
+                pointer-events: none;
+                left: 10px;   /* space from edge */
+            }
 
-.ad-left {
-    pointer-events: none;
-    left: 10px;   /* space from edge */
-}
+            .ad-right {
+                pointer-events: none;
+                right: 10px;  /* space from edge */
+            }
+            /* =======================
+            PAGE WRAPPER
+            ======================= */
+            body {
+                background-color: lavender;
+                margin: 0;
+                font-family: Arial, sans-serif;
+            }
 
-.ad-right {
-    pointer-events: none;
-    right: 10px;  /* space from edge */
-}
-/* =======================
-   PAGE WRAPPER
-======================= */
-body {
-    background-color: lavender;
-    margin: 0;
-    font-family: Arial, sans-serif;
-}
+            .page-wrapper {
+                width: 90%;
+                max-width: 1000px;
+                margin: 30px auto;
+                padding: 3%;
+                background: #ffe4f1;
+                border-radius: 20px;
+                box-shadow: 0px 4px 15px rgba(0,0,0,0.1);
+                position: relative;
+                z-index: 2; /* keeps content above side images */
+            }
 
-.page-wrapper {
-    width: 90%;
-    max-width: 1000px;
-    margin: 30px auto;
-    padding: 3%;
-    background: #ffe4f1;
-    border-radius: 20px;
-    box-shadow: 0px 4px 15px rgba(0,0,0,0.1);
-    position: relative;
-    z-index: 2; /* keeps content above side images */
-}
+            /* =======================
+            HEADER
+            ======================= */
+            h1 {
+                text-align: center;
+                color: hotpink;
+                margin-bottom: 20px;
+            }
 
-/* =======================
-   HEADER
-======================= */
-h1 {
-    text-align: center;
-    color: hotpink;
-    margin-bottom: 20px;
-}
+            /* =======================
+            FORM
+            ======================= */
+            .track-form {
+                width: 90%;
+                max-width: 400px;
+                margin: 0 auto;
+                text-align: center;
+            }
 
-/* =======================
-   FORM
-======================= */
-.track-form {
-    width: 90%;
-    max-width: 400px;
-    margin: 0 auto;
-    text-align: center;
-}
+            .track-form input {
+                width: 100%;
+                padding: 12px;
+                font-size: 1rem;
+                border: 2px solid pink;
+                border-radius: 8px;
+                box-sizing: border-box;
+            }
 
-.track-form input {
-    width: 100%;
-    padding: 12px;
-    font-size: 1rem;
-    border: 2px solid pink;
-    border-radius: 8px;
-    box-sizing: border-box;
-}
+            .track-form button {
+                margin-top: 10px;
+                padding: 10px 16px;
+                background-color: hotpink;
+                color: white;
+                border: none;
+                border-radius: 8px;
+                cursor: pointer;
+            }
 
-.track-form button {
-    margin-top: 10px;
-    padding: 10px 16px;
-    background-color: hotpink;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-}
+            .track-form button:hover {
+                background-color: deeppink;
+            }
 
-.track-form button:hover {
-    background-color: deeppink;
-}
+            /* =======================
+            IMAGE GALLERY
+            ======================= */
+            .gallery {
+                display: flex;
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 3%;
+                margin-top: 30px;
+                
+            }
 
-/* =======================
-   IMAGE GALLERY
-======================= */
-.gallery {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 3%;
-    margin-top: 30px;
-    
-}
+            .img-box {
+                width: 22%;
+                max-width: 200px;
+                height: 28%;
+                max-height: 255px;
+                aspect-ratio: 1 / 1.2;
+                object-fit: cover;
+                transition: 0.3s ease;
+            }
 
-.img-box {
-    width: 22%;
-    max-width: 200px;
-    height: 28%;
-    max-height: 255px;
-    aspect-ratio: 1 / 1.2;
-    object-fit: cover;
-    transition: 0.3s ease;
-}
+            /* =======================
+            MOBILE
+            ======================= */
+            @media (max-width: 1000px) {
+                .img-box {
+                    width: auto;
+                    max-width: 200px;
+                    height: auto;          /* allow full height */
+                    max-height: 255px;
+                    aspect-ratio: auto;    /* remove forced ratio */
+                    object-fit: contain;   /* show entire image */
+                }
 
-/* =======================
-   MOBILE
-======================= */
-@media (max-width: 1000px) {
-    .img-box {
-        width: auto;
-        max-width: 200px;
-        height: auto;          /* allow full height */
-        max-height: 255px;
-        aspect-ratio: auto;    /* remove forced ratio */
-        object-fit: contain;   /* show entire image */
-    }
+                .side-ad {
+                    display: none !important;
+                }
 
-    .side-ad {
-        display: none !important;
-    }
+                .page-wrapper {
+                    width: 95%;
+                    margin: 20px auto;
+                }
+            }
+        </style>
 
-    .page-wrapper {
-        width: 95%;
-        margin: 20px auto;
-    }
-}
-</style>
+        <?php
+            session_start();
 
-<?php
-session_start();
-
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
+            ini_set('display_errors', 1);
+            error_reporting(E_ALL);
 
 
-/* =======================
-   GET ORDER DATA
-======================= */
-$order = null;
+            /* =======================
+            GET ORDER DATA
+            ======================= */
+            $order = null;
 
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $TrackingID = $_POST["TrackingID"] ?? "";
+            if ($_SERVER["REQUEST_METHOD"] === "POST")
+            {
+                $TrackingID = $_POST["TrackingID"] ?? "";
 
-    if (!empty($TrackingID) && strlen($TrackingID) <=128) {
+                if (!empty($TrackingID) && strlen($TrackingID) <=128)
+                {
+                    $stmt = $pdo->prepare("
+                        SELECT TrackingID, OrderStatus, Total 
+                        FROM ORDERS 
+                        WHERE TrackingID= ?
+                    ");
 
-        $stmt = $pdo->prepare("
-            SELECT TrackingID, OrderStatus, Total 
-            FROM ORDERS 
-            WHERE TrackingID= ?
-        ");
+                    $stmt->execute([$TrackingID]);
+                    $order = $stmt->fetch(PDO::FETCH_ASSOC);
+                }
+            }
 
-        $stmt->execute([$TrackingID]);
-        $order = $stmt->fetch(PDO::FETCH_ASSOC);
-    }
-}
+            /* =======================
+            TRACKING LOGIC
+            ======================= */
+            $status = $order["OrderStatus"] ?? "";
 
-/* =======================
-   TRACKING LOGIC
-======================= */
-$status = $order["OrderStatus"] ?? "";
+            function activeStep($status, $steps)
+            {
+                return in_array($status, $steps)
+                    ? "filter: hue-rotate(90deg) saturate(1.5);"
+                    : "opacity: 0.3;";
+            }
+        ?>
+    </head>
 
-function activeStep($status, $steps) {
-    return in_array($status, $steps)
-        ? "filter: hue-rotate(90deg) saturate(1.5);"
-        : "opacity: 0.3;";
-}
-?>
+    <body>
+        <img class="side-ad ad-left" src="https://media.tenor.com/IRFM1RzwxV0AAAAm/goku-dance.webp">
+        <img class="side-ad ad-right" src="https://media.tenor.com/cgByUMFw0r8AAAAm/minecraft-minecraft-steve.webp">
 
-</head>
+        <div class="page-wrapper">
+            <h1>TRACK YOUR ORDER</h1>
 
-<body>
-<img class="side-ad ad-left" src="https://media.tenor.com/IRFM1RzwxV0AAAAm/goku-dance.webp">
-<img class="side-ad ad-right" src="https://media.tenor.com/cgByUMFw0r8AAAAm/minecraft-minecraft-steve.webp">
-<div class="page-wrapper">
+            <form method="POST" class="track-form">
+                <input type="text" name="TrackingID" maxlength="64" placeholder="Enter Tracking ID" required>
+                <button type="submit">Track Your Order</button>
+            </form>
 
-    <h1>TRACK YOUR ORDER</h1>
+            <div class="gallery">
+                <img class="img-box" title="Your Order Has Been Placed"
+                style="<?= activeStep($status, ['OrderPlaced','Processing','Shipped','Delivered']) ?>"
+                src="https://students.cs.niu.edu/~z1977897/order%20placed.png">
 
-    <form method="POST" class="track-form">
-        <input type="text" name="TrackingID" maxlength="64" placeholder="Enter Tracking ID" required>
-        <button type="submit">Track Your Order</button>
-    </form>
+                <img class="img-box" title="Your Order is being Processed"
+                style="<?= activeStep($status, ['Processing','Shipped','Delivered']) ?>"
+                src="https://students.cs.niu.edu/~z1977897/order%20processing.png">
 
-    <div class="gallery">
+                <img class="img-box" title="Your Order Has Been Shipped!"
+                style="<?= activeStep($status, ['Shipped','Delivered']) ?>"
+                src="https://students.cs.niu.edu/~z1977897/order%20shipped.png">
+                
+                <img class="img-box" title="Your Order Has Arrived!"
+                style="<?= activeStep($status, ['Delivered']) ?>"
+                src="https://students.cs.niu.edu/~z1977897/order%20delivered.png">
+            </div>
+        </div>
 
-        <img class="img-box" title="Your Order Has Been Placed"
-        style="<?= activeStep($status, ['OrderPlaced','Processing','Shipped','Delivered']) ?>"
-        src="https://students.cs.niu.edu/~z1977897/order%20placed.png">
+        <a href="https://students.cs.niu.edu/~z1977897/gpstore.php" class="top-right-btn">
+            Store Home
+        </a>
 
-        <img class="img-box" title="Your Order is being Processed"
-        style="<?= activeStep($status, ['Processing','Shipped','Delivered']) ?>"
-        src="https://students.cs.niu.edu/~z1977897/order%20processing.png">
-
-        <img class="img-box" title="Your Order Has Been Shipped!"
-        style="<?= activeStep($status, ['Shipped','Delivered']) ?>"
-        src="https://students.cs.niu.edu/~z1977897/order%20shipped.png">
-        
-        <img class="img-box" title="Your Order Has Arrived!"
-        style="<?= activeStep($status, ['Delivered']) ?>"
-        src="https://students.cs.niu.edu/~z1977897/order%20delivered.png">
-
-    </div>
-
-</div>
-
-<a href="https://students.cs.niu.edu/~z1977897/gpstore.php" class="top-right-btn">
-    Store Home
-</a>
-
-<a href="https://students.cs.niu.edu/~z1977897/checkout.php" class="top-right-btn2">
-    Checkout
-</a>
-
-</body>
+        <a href="https://students.cs.niu.edu/~z1977897/checkout.php" class="top-right-btn2">
+            Checkout
+        </a>
+    </body>
 </html>
