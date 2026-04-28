@@ -147,7 +147,7 @@ session_start();
     <body style="background-color:Lavender">
 
 	<h1>Stuffie Store<hr></h1>
-	<a href="https://students.cs.niu.edu/~z1977897/gpstore.php" class="top-right-btn2">
+	<a href="https://students.cs.niu.edu/~<?= $stored_user ?>/gpstore.php" class="top-right-btn2">
 	    Home
 	</a>
 
@@ -179,7 +179,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_id']))
 
     $deleteStmt->execute([$trackingID, $removeID]);
 
-	header("Location: https://students.cs.niu.edu/~z1977897/shoppingcart.php");
+	header("Location: https://students.cs.niu.edu/~" . $stored_user . "/shoppingcart.php");
 	exit;
 }
 
@@ -208,7 +208,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_id']))
 	</table>
 
 	<div style="text-align: center; margin-top: 30px;">
-	    <a href="https://students.cs.niu.edu/~z1977897/checkout.php" class="button2">
+	    <a href="https://students.cs.niu.edu/~<?= $stored_user ?>/checkout.php" class="button2">
 		Continue to checkout
 	    </a>
 	</div>  

@@ -205,11 +205,11 @@
 
     <body style="background-color:Lavender">
         <h1>Stuffie Store<hr></h1>
-        <a href="https://students.cs.niu.edu/~z1977897/shoppingcart.php" class="top-right-btn2">
+        <a href="https://students.cs.niu.edu/~<?= $stored_user ?>/shoppingcart.php" class="top-right-btn2">
             My Cart
         </a>
 
-		 <a href="https://students.cs.niu.edu/~z1977897/employee.php" class="bottom-right-btn">
+		 <a href="https://students.cs.niu.edu/~<?= $stored_user ?>/employee.php" class="bottom-right-btn">
             Employee Page
         </a>
 

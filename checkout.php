@@ -282,11 +282,11 @@ catch(PDOException $e)
         </p>
 
         <?php endif; ?>
-        <a href="https://students.cs.niu.edu/~z1977897/gpstore.php" class="top-right-btn">
+        <a href="https://students.cs.niu.edu/~<?= $stored_user ?>/gpstore.php" class="top-right-btn">
             Store Home
         </a>
 
-        <a href="https://students.cs.niu.edu/~z1977897/trackpage.php" class="top-right-btn2">
+        <a href="https://students.cs.niu.edu/~<?= $stored_user ?>/trackpage.php" class="top-right-btn2">
             Track Your Package
         </a>
     </body>
