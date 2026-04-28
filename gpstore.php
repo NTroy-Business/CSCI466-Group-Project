@@ -200,16 +200,40 @@
 				background-color: deeppink;
                 transform: scale(1.05);
 			}
+
+            .side-ad {
+                position: fixed;
+                top: 10%;              /* pushes them down a bit */
+                width: 200px;          /* narrow like ads */
+                height: 75vh;          /* NOT full page height */
+                object-fit: cover;
+                z-index: 0;
+                opacity: 0.85;
+                border-radius: 10px;
+            }
+
+            .ad-left {
+                pointer-events: none;
+                left: 10px;   /* space from edge */
+            }
+
+            .ad-right {
+                pointer-events: none;
+                right: 10px;  /* space from edge */
+            }
         </style>
     </head>
 
     <body style="background-color:Lavender">
+        <img class="side-ad ad-left" src="https://media.tenor.com/lfDATg4Bhc0AAAAM/happy-cat.gif">
+        <img class="side-ad ad-right" src="https://media.tenor.com/cb9L14uH-YAAAAAM/cool-fun.gif">
+    
         <h1>Stuffie Store<hr></h1>
-        <a href="https://students.cs.niu.edu/~<?= $stored_user ?>/shoppingcart.php" class="top-right-btn2">
+        <a href="https://students.cs.niu.edu/~z1977897/shoppingcart.php" class="top-right-btn2">
             My Cart
         </a>
 
-		 <a href="https://students.cs.niu.edu/~<?= $stored_user ?>/emp_page.php" class="bottom-right-btn">
+		 <a href="https://students.cs.niu.edu/~z1977897/employee.php" class="bottom-right-btn">
             Employee Page
         </a>
 
