@@ -35,7 +35,7 @@ catch(PDOException $e)
 ?>
 
 <?php
-    $DefaultStatus = "Processing";
+    $DefaultStatus = "OrderPlaced";
     foreach($cartItems as $item)
     {
         $Price = (float)$item['Price'];
@@ -52,7 +52,6 @@ catch(PDOException $e)
 
     if ($_SERVER["REQUEST_METHOD"] === "POST")
     {
-
         $CreditCard = $_POST["Credit_Card"] ?? "";
         $ShipAdd    = $_POST["Ship_Add"] ?? "";
         $BillAdd    = $_POST["Bill_Add"] ?? "";
@@ -82,7 +81,25 @@ catch(PDOException $e)
             ]);
 
             //remove from inventory
+            $subtractStmt = $pdo->prepare("
+                SELECT STUFFEDANIMALSTORE.StuffieID, SHOPPINGCART.CartQty, STUFFEDANIMALSTORE.InvQty
+                FROM SHOPPINGCART 
+                JOIN STUFFEDANIMALSTORE 
+                ON SHOPPINGCART.StuffieID = STUFFEDANIMALSTORE.StuffieID
+                WHERE SHOPPINGCART.TrackingID = ?
+            "); 
 
+            $subtractStmt->execute([$trackingID]);
+            $removeItems = $subtractStmt->fetchAll(PDO::FETCH_ASSOC);
+
+            foreach($removeItems as $rItem)
+            {
+                $newQty = $rItem['InvQty'] - $rItem['CartQty'];
+                $ID = $rItem['StuffieID'];
+                
+                $remove = $pdo->prepare("UPDATE STUFFEDANIMALSTORE SET InvQty = ? WHERE StuffieID = ?");
+                $remove->execute([$newQty, $ID]);
+            }
 
             session_regenerate_id(true);
             echo $trackingID;
@@ -282,11 +299,11 @@ catch(PDOException $e)
         </p>
 
         <?php endif; ?>
-        <a href="https://students.cs.niu.edu/~<?= $stored_user ?>/gpstore.php" class="top-right-btn">
+        <a href="https://students.cs.niu.edu/~z1977897/gpstore.php" class="top-right-btn">
             Store Home
         </a>
 
-        <a href="https://students.cs.niu.edu/~<?= $stored_user ?>/trackpage.php" class="top-right-btn2">
+        <a href="https://students.cs.niu.edu/~z1977897/trackpage.php" class="top-right-btn2">
             Track Your Package
         </a>
     </body>
