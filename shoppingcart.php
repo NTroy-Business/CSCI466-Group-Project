@@ -15,7 +15,52 @@ catch(PDOException $e)
 }
 
 session_start();
-    $trackingID = session_id();
+$trackingID = session_id();
+
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST')
+{
+    //REMOVE ITEM
+    if (isset($_POST['remove_id']))
+    {
+	$stmt = $pdo->prepare("
+	    DELETE FROM SHOPPINGCART
+	    WHERE TrackingID = ? AND StuffieID = ?
+	");
+	$stmt->execute([$trackingID, $_POST['remove_id']]);
+    }
+
+    //UPDATE QUANTITY
+    if (isset($_POST['update_id'], $_POST['new_qty']))
+    {
+	$qty = intval($_POST['new_qty']);
+
+	if ($qty > 0)
+	{
+	    $stmt = $pdo->prepare("
+		UPDATE SHOPPINGCART
+		SET CartQty = ?
+		WHERE TrackingID = ? AND StuffieID = ?
+	    ");
+	    $stmt->execute([$qty, $trackingID, $_POST['update_id']]);
+	}
+	else
+	{
+	    //Remove item if quantity = 0
+	    $stmt = $pdo->prepare("
+		DELETE FROM SHOPPINGCART
+		WHERE TrackingID = ? AND StuffieID = ?
+	    ");
+	    $stmt->execute([$trackingID, $_POST['update_id']]);
+	}
+    }
+
+    //Redirect to prevent resubmission
+    header("Location: https://students.cs.niu.edu/~" . $stored_user . "/shoppingcart.php");
+    exit;
+}
+
+
 ?>
 
 <html>
@@ -141,6 +186,14 @@ session_start();
 		background-color: deeppink;
 		transform: scale(1.05);
 	    }
+
+	    input[type="number"] {
+		border: none;
+		outline: none;
+		background-color: transparent;
+		font-family: 'Nunito', sans-serif;
+		color: hotpink;
+	    }
 	</style>
     </head>
 
@@ -156,6 +209,7 @@ session_start();
 		<th>Stuffie Name</th>
 		<th>Price</th>
 		<th>Quantity</th>
+		<th>Remove</th>
 		<th></th>
 	    </tr>
 
@@ -168,41 +222,32 @@ $statement = $pdo->prepare("
 		    WHERE c.TrackingID = ?
 		    ");
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove_id'])) 
-{
-    $removeID = $_POST['remove_id'];
 
-    $deleteStmt = $pdo->prepare("
-	DELETE FROM SHOPPINGCART
-	WHERE TrackingID = ? AND StuffieID = ?
-    ");
 
-    $deleteStmt->execute([$trackingID, $removeID]);
+$statement->execute([$trackingID]);
 
-	header("Location: https://students.cs.niu.edu/~" . $stored_user . "/shoppingcart.php");
-	exit;
+if ($statement->rowCount() === 0) {
+    echo "<tr><td colspan='4'>Shopping cart is empty</td></tr>";
 }
 
-		$statement->execute([$trackingID]);
+while ($row = $statement->fetch())
+{
+    echo "<tr>
+	<td>{$row['ProductName']}</td>
+	<td>{$row['Price']}</td>
 
-		if ($statement->rowCount() === 0) {
-			echo "<tr><td colspan='4'>Shopping cart is empty</td></tr>";
-		}
-			
-		while ($row = $statement->fetch())
-		{
-		    echo "<tr>
-			<td>{$row['ProductName']}</td>
-			<td>{$row['Price']}</td>
-			<td>{$row['CartQty']}</td>
-			<td>
-			    <form method='POST' style='margin:0;'>
-			    <input type='hidden' name='remove_id' value='{$row['StuffieID']}'>
-        		<button type='submit' class='button1'>Remove</button>
-				</form>
-			</td>
-			</tr>";
-		}
+	<td> <form method='POST' style='margin:0; display:flex; justify-content:center; gap:5px;'>
+	<input type='hidden' name='update_id' value='{$row['StuffieID']}'>
+	<input type='number' name='new_qty' value='{$row['CartQty']}' min='0' style='width:60px; text-align:center;'>
+	<button type='submit' class='button2'>Update</button>
+	</form> </td>
+
+	<td> <form method='POST' style='margin:0;'>
+	<input type='hidden' name='remove_id' value='{$row['StuffieID']}'>
+	<button type='submit' class='button1'>X</button>
+	</form> </td>
+	</tr>";
+}
 ?>
 
 	</table>

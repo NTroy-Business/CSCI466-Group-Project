@@ -209,7 +209,7 @@
             My Cart
         </a>
 
-		 <a href="https://students.cs.niu.edu/~<?= $stored_user ?>/employee.php" class="bottom-right-btn">
+		 <a href="https://students.cs.niu.edu/~<?= $stored_user ?>/emp_page.php" class="bottom-right-btn">
             Employee Page
         </a>
 
