@@ -20,7 +20,7 @@ if(isset($_POST['addtocart']))
     $stuffieID=$_POST['stuffie_id'];
 
     // Get current inventory quantity for this item
-    $invStmt = $pdo->prepare("SELECT InvQty FROM StuffedAnimalStore WHERE StuffieID = ?");
+    $invStmt = $pdo->prepare("SELECT InvQty FROM STUFFEDANIMALSTORE WHERE StuffieID = ?");
     $invStmt->execute([$stuffieID]);
     $invRow = $invStmt->fetch();
 	
