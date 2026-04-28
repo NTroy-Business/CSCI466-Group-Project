@@ -17,6 +17,38 @@ catch(PDOException $e)
 session_start();
     $trackingID = session_id();
 
+    // List of ads
+    $ads = 
+    [
+        [
+            "img" => "https://students.cs.niu.edu/~z1977897/ad1vb.png",
+            "link" => "https://www.niu.edu/academic-support/get-help/tutoring.shtml"
+        ],
+        [
+            "img" => "https://students.cs.niu.edu/~z1977897/ad2.png",
+            "link" => "https://www.niu.edu/academic-support/get-help/tutoring.shtml"
+        ],
+        [
+            "img" => "https://students.cs.niu.edu/~z1977897/ad3.png",
+            "link" => "https://www.niu.edu/academic-support/get-help/tutoring.shtml"
+        ],
+        [
+            "img" => "https://students.cs.niu.edu/~z1977897/ad4.gif",
+            "link" => "https://acm.cs.niu.edu/"
+        ]
+    ];
+
+    // Pick left ad
+    $leftAd  = $ads[array_rand($ads)];
+	
+    // Pick right ad, different from left ad
+    do 
+    {
+        $rightAd = $ads[array_rand($ads)];
+    } 
+    while ($rightAd == $leftAd);
+
+
     if ($_SERVER['REQUEST_METHOD'] === 'POST')
     {
         //REMOVE ITEM
@@ -206,10 +238,43 @@ session_start();
             font-family: 'Nunito', sans-serif;
             color: hotpink;
             }
+
+            .side-ad {
+                position: fixed;
+                top: 12%;              /* pushes them down a bit */
+                width: 24vh;           /* narrow like ads */
+                height: 75vh;          /* NOT full page height */
+                object-fit: cover;
+                z-index: 0;
+                opacity: 0.85;
+                border-radius: 10px;
+            }
+
+            .ad-left {
+                left: 10px;   /* space from edge */
+            }
+
+            .ad-right {
+                right: 10px;  /* space from edge */
+            }
+
         </style>
     </head>
 
     <body style="background-color:Lavender">
+
+<?php
+	// Left ad
+	echo '<a href="' . $leftAd["link"] . '">';
+	echo '<img class="side-ad ad-left" src="' . $leftAd["img"] . '">';
+	echo '</a>';
+
+	// Right ad
+	echo '<a href="' . $rightAd["link"] . '">';
+	echo '<img class="side-ad ad-right" src="' . $rightAd["img"] . '">';
+	echo '</a>';
+?>
+
         <h1>Stuffie Store<hr></h1>
         <a href="https://students.cs.niu.edu/~z1977897/gpstore.php" class="top-right-btn2">
             Home
