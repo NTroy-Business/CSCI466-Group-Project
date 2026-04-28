@@ -1,71 +1,71 @@
 <?php
-        require_once "storedCreds.php";
-    ?>
+    require_once "storedCreds.php";
+?>
+
 <?php
-try 
-{
-   $pdo = new PDO($stored_database, $stored_user, $stored_pass);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-}
-catch(PDOException $e)
-{
-    echo "Connection to database failed: " . $e->getMessage();
-}
+	try 
+	{
+	   $pdo = new PDO($stored_database, $stored_user, $stored_pass);
+	    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	}
+	catch(PDOException $e)
+	{
+	    echo "Connection to database failed: " . $e->getMessage();
+	}
 
-session_start();
-$TrackingID = session_id();
+    session_start();
+    $trackingID = session_id();
 
-if(isset($_POST['addtocart']))
-{
-    $stuffieID=$_POST['stuffie_id'];
-
-    // Get current inventory quantity for this item
-    $invStmt = $pdo->prepare("SELECT InvQty FROM STUFFEDANIMALSTORE WHERE StuffieID = ?");
-    $invStmt->execute([$stuffieID]);
-    $invRow = $invStmt->fetch();
-	
-    // Store inventory quantity for comparison
-    $stockQty = (int)$invRow['InvQty'];
-
-    // Check if item is already in the user's cart
-    $statement = $pdo->prepare("SELECT CartQty FROM SHOPPINGCART WHERE TrackingID = ? AND StuffieID = ?");
-    $statement->execute([$TrackingID, $stuffieID]);
-    $row = $statement->fetch();
-
-    if ($row)
+    if(isset($_POST['addtocart']))
     {
-        // Calculate new quantity if one more item is added
-        $currentQty = (int)$row['CartQty'];
-        $newQty = $currentQty + 1;
+        $stuffieID=$_POST['stuffie_id'];
 
-	// Prevent adding more items than what is available in stock
-        if ($newQty > $stockQty)
+        // Get current inventory quantity for this item
+        $invStmt = $pdo->prepare("SELECT InvQty FROM STUFFEDANIMALSTORE WHERE StuffieID = ?");
+        $invStmt->execute([$stuffieID]);
+        $invRow = $invStmt->fetch();
+        
+        // Store inventory quantity for comparison
+        $stockQty = (int)$invRow['InvQty'];
+
+        // Check if item is already in the user's cart
+        $statement = $pdo->prepare("SELECT CartQty FROM SHOPPINGCART WHERE TrackingID = ? AND StuffieID = ?");
+        $statement->execute([$trackingID, $stuffieID]);
+        $row = $statement->fetch();
+
+        if($row)
         {
-            echo "Unable to add more than what is in stock. There is currently $stockQty available.";
+            // Calculate new quantity if one more item is added
+            $currentQty = (int)$row['CartQty'];
+            $newQty = $currentQty + 1;
+
+            // Prevent adding more items than what is available in stock
+            if ($newQty > $stockQty)
+            {
+                echo "Unable to add more than what is in stock. There is currently $stockQty available.";
+            }
+            else
+            {
+            // Update cart with checked quantity
+                $stmt = $pdo->prepare("UPDATE SHOPPINGCART SET CartQty = ? WHERE TrackingID = ? AND StuffieID = ?");
+                $stmt->execute([$newQty, $trackingID, $stuffieID]);
+            }
         }
         else
         {
-	    // Update cart with checked quantity
-            $stmt = $pdo->prepare("UPDATE SHOPPINGCART SET CartQty = ? WHERE TrackingID = ? AND StuffieID = ?");
-            $stmt->execute([$newQty, $TrackingID, $stuffieID]);
+            // Prevent adding item if it is out of stock
+            if ($stockQty < 1)
+            {
+                echo "This item is out of stock.";
+            }
+            else
+            {
+                // Insert new item into cart with quantity of 1
+                $stmt = $pdo->prepare("INSERT INTO SHOPPINGCART (TrackingID, StuffieID, CartQty) VALUES (?, ?, 1)");
+                $stmt->execute([$trackingID, $stuffieID]);
+            }
         }
     }
-    else
-    {
-        // Prevent adding item if it is out of stock
-        if ($stockQty < 1)
-        {
-            echo "This item is out of stock.";
-        }
-        else
-        {
-            // Insert new item into cart with quantity of 1
-            $stmt = $pdo->prepare("INSERT INTO SHOPPINGCART (TrackingID, StuffieID, CartQty) VALUES (?, ?, 1)");
-            $stmt->execute([$TrackingID, $stuffieID]);
-        }
-    }
-}
-                
 ?>
 
 <html>
@@ -200,15 +200,10 @@ if(isset($_POST['addtocart']))
 				background-color: deeppink;
                 transform: scale(1.05);
 			}
-				
-			
         </style>
     </head>
 
-
-
     <body style="background-color:Lavender">
-        
         <h1>Stuffie Store<hr></h1>
         <a href="https://students.cs.niu.edu/~z1977897/shoppingcart.php" class="top-right-btn2">
             My Cart
