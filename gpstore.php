@@ -17,7 +17,7 @@ $TrackingID = session_id();
 
 if(isset($_POST['addtocart']))
 {
-    $stuffieID=$_POST['StuffieID'];
+    $stuffieID=$_POST['stuffie_id'];
 
     // Get current inventory quantity for this item
     $invStmt = $pdo->prepare("SELECT InvQty FROM StuffedAnimalStore WHERE StuffieID = ?");
