@@ -244,7 +244,7 @@ catch(PDOException $e)
             function activeStep($status, $steps)
             {
                 return in_array($status, $steps)
-                    ? "filter: hue-rotate(90deg) saturate(1.5);"
+                    ? "filter: hue-rotate(270deg) saturate(1.5);"
                     : "opacity: 0.3;";
             }
         ?>
