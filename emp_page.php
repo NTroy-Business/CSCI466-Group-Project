@@ -312,6 +312,9 @@ Allows the viewer to change status of orders
                 foreach($answer3[0] as $key => $value) 
                 {
                     echo "<th>" . htmlspecialchars($key) . "</th>";
+
+					$orderInfo = "SELECT StuffieID
+					
                 }
             }
 
