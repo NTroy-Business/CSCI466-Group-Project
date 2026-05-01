@@ -312,10 +312,8 @@ Allows the viewer to change status of orders
                 foreach($answer3[0] as $key => $value) 
                 {
                     echo "<th>" . htmlspecialchars($key) . "</th>";
-
-					$orderInfo = "SELECT StuffieID
-					
                 }
+				echo "<th>Items</th>";
             }
 
             echo "</tr>";
@@ -331,12 +329,35 @@ Allows the viewer to change status of orders
                 {
                     echo "<td>" . htmlspecialchars($value) . "</td>";
                 }
-                echo "</tr>";
+
+				$orderInfo = $pdo->prepare("SELECT STUFFEDANIMALSTORE.StuffieID, STUFFEDANIMALSTORE.ProductName, SHOPPINGCART.CartQty FROM STUFFEDANIMALSTORE 
+				JOIN SHOPPINGCART ON SHOPPINGCART.StuffieID = STUFFEDANIMALSTORE.StuffieID WHERE SHOPPINGCART.TrackingID = ?");
+
+				$orderInfo->execute([$row['TrackingID']]);
+				$items = $orderInfo->fetchAll(PDO::FETCH_ASSOC);
+
+				echo "<td>";
+
+				if(!empty($items))
+				{
+					foreach($items as $item) 
+					{
+            					 echo htmlspecialchars($item['ProductName']) . " - " . htmlspecialchars($item['CartQty']) . "<br>";
+        			}
+				}
+				else 
+				{
+        			echo "No items";
+    			}
+
+				echo "</td>";
+    			echo "</tr>";
+				
             }
 
             echo "</table>";
         
-            #Step 4 Change the Order Status accordingly    
+        #Step 4 Change the Order Status accordingly    
         ?>
 
         <h1><b>Update order status</b></h1>
