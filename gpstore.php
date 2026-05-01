@@ -252,44 +252,7 @@
                 pointer-events: none;
                 right: 10px;  /* space from edge */
             }
-			
-			.popup {
-				position: relative;
-  				display: inline-block;
-  				cursor: pointer;
-			}
-
-			.popup .popuptext {
-  				visibility: hidden;
-  				width: 160px;
-  				background-color: #555;
-  				color: #fff;
-  				text-align: center;
-  				border-radius: 6px;
-  				padding: 8px 0;
-  				position: absolute;
-  				z-index: 1;
-  				bottom: 125%;
-  				left: 50%;
-  				margin-left: -80px;
-			}
-
-			.popup .show {
-  				visibility: visible;
-  				-webkit-animation: fadeIn 1s;
-  				animation: fadeIn 1s
-			}
-
-			
         </style>
-
-<script>
-function togglePopup(id) 
-{
-  	document.getElementById("popup" + id).classList.toggle("show");
-}
-</script>
-		
     </head>
 
     <body style="background-color:Lavender">
@@ -318,14 +281,10 @@ function togglePopup(id)
                         <button class="button button1" type="submit" name="addtocart">ADD TO CART</button>
                         <input type="hidden" name="stuffie_id" value="S001">
                     </form>
-					
-					<div class="popup" onclick="togglePopup(1)">erawr!
-  					<span class="popuptext" id="popup1">
-					<p>erawr</p>
+
+                    <p>erawr</p>
                     <p>$500.00</p>
-                    <p>green dinosaur</p></span>
-					</div>
-					
+                    <p>green dinosaur</p>
                     <br>
                 </td>
 
