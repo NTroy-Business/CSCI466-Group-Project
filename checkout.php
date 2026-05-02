@@ -35,7 +35,7 @@ catch(PDOException $e)
 ?>
 
 <?php
-    $DefaultStatus = "OrderPlaced";
+    $DefaultStatus = "Processing";
     foreach($cartItems as $item)
     {
         $Price = (float)$item['Price'];
@@ -208,7 +208,7 @@ catch(PDOException $e)
             }
 
                 .page-wrapper {
-                width: 90%;
+                width: 50%;
                 max-width: 1000px;
                 margin: 30px auto;
                 padding-top: .2%;
@@ -230,7 +230,7 @@ catch(PDOException $e)
             .checkout-top {
                 background-color: #ffcaeb;
                 margin: 10px auto;
-                font-size: 75px;
+                font-size: 60px;
                 font-weight: bold;
                 padding: 3%;
             }    
@@ -241,16 +241,16 @@ catch(PDOException $e)
             }
             .checkout-prices {
                 
-                font-size: 50px;
+                font-size: 30px;
                 color: hotpink;
             }
             .checkout-total {
-                font-size: 75px;
+                font-size: 60px;
                 font-color: white;
                 font-weight: bold;
                 color: white;
                 background-color: hotpink;
-                    
+                padding: 3%;
             }
         </style>
     </head>
@@ -261,6 +261,8 @@ catch(PDOException $e)
                 <div class="checkout-top">
                     Checkout Total
                 </div>
+
+                <br>
 
                 <?php
                     foreach ($PriceArray as $value)
@@ -292,6 +294,8 @@ catch(PDOException $e)
             <input type="text" placeholder="BillAddr" name="Bill_Add" required>
             <button type="submit">Place Order</button>
         </form>
+
+        <h3><br></h3>
 
         <?php else: ?>
         <p style="color:red; font-size:24px; text-align:center;">
