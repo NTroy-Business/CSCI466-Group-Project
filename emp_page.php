@@ -4,6 +4,88 @@ Allows the viewer to alter quantity
 Table names: ORDERS, STUFFEDANIMALSTORE, REQUESTS, SHOPPINGCART
 Allows the viewer to change status of orders
 -->
+<?php
+            ini_set('display_errors', 1);
+            ini_set('display_startup_errors', 1);
+            error_reporting(E_ALL);
+
+            $username = "";//Will be changed later
+            $passwd = "";//Will be changed later
+
+            try
+            {
+                $dsn = "mysql:host=courses;dbname={$username}";
+                $pdo = new PDO($dsn, $username, $passwd);
+            }
+
+            catch(PDOException $e)
+            {
+                echo "Connection failed " . $e->getmessage();
+                exit();
+            }
+
+            #Check if there was an answer submitted
+            if (isset($_POST['step2']))
+            {
+                $product = $_POST['product'] ?? null;
+
+                $check = true;
+
+                $qty = filter_input(INPUT_POST, 'qty', FILTER_VALIDATE_INT);
+
+                if($qty === false || $qty === null)
+                {
+                    echo "<p style='color:red'>Invalid Qty Input</p>";
+                    $check = false;
+                }
+                
+                if(!$product)
+                {
+                    echo "<p style='color:red'>No Product Selected</p>";
+                    $check = false;
+                }
+                
+                if($check)
+                {
+                    $checkStmt = $pdo->prepare("SELECT InvQty FROM STUFFEDANIMALSTORE WHERE StuffieID = ?");
+                    $checkStmt->execute([$product]);
+                    $answer2 = $checkStmt->fetch(PDO::FETCH_ASSOC);
+
+                    if(!$answer2)
+                    {
+                        echo "Invalid Request";
+                    }
+                    else
+                    {
+                        if($qty <= 0)
+                        {
+                            echo "<p style='color:red'>Invalid Qty amount</p>";
+                        }
+                        else if($qty > 9999)
+                        {
+                            echo "<p style='color:red'>Invalid Qty amount exceeds max InvQty</p>";
+                        }
+                        else
+                        {
+                            $updateSql = $pdo->prepare("UPDATE STUFFEDANIMALSTORE SET InvQty = InvQty + ? WHERE StuffieID = ?");
+                            $updateSql->execute([$qty, $product]);
+                            //echo "<p style='color:green;'>Update complete</p>";
+                            header("Location: " . $_SERVER['PHP_SELF'] . "?updated=1");
+                            exit();
+
+                            $resultStmt = $pdo->prepare("SELECT ProductName, InvQty FROM STUFFEDANIMALSTORE WHERE StuffieID = ?");
+                            $resultStmt->execute([$product]);
+                            $updatedQTY = $resultStmt->fetch(PDO::FETCH_ASSOC);
+
+                            $qty = $updatedQTY['InvQty'];
+                            $ProductName = $updatedQTY['ProductName'];
+
+                            //echo "<p><b>Product: $ProductName now has QTY of: $qty</b></p>";
+                        }
+                    }
+                }
+            }
+        ?>
 
 <html>
     <head>
@@ -14,7 +96,7 @@ Allows the viewer to change status of orders
         <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
 
         <style>
-            h1 {font-family:'Nunito', sans-serif; color:hotpink; padding: 15px;}
+            h1 {font-family:'Nunito', sans-serif; color:hotpink; padding: 5px 20px;}
             p {font-family:'Nunito', sans-serif; color:lightpink; word-break: break-word; margin: 20px;}
 
             img 
@@ -164,27 +246,12 @@ Allows the viewer to change status of orders
         <h1><b>All Products:</b></h1>
 
         <?php
-            ini_set('display_errors', 1);
-            ini_set('display_startup_errors', 1);
-            error_reporting(E_ALL);
-
-            $username = "";//Will be changed later
-            $passwd = "";//Will be changed later
-
-            try
-            {
-                $dsn = "mysql:host=courses;dbname={$username}";
-                $pdo = new PDO($dsn, $username, $passwd);
-            }
-
-            catch(PDOException $e)
-            {
-                echo "Connection failed " . $e->getmessage();
-                exit();
+            if (isset($_GET['updated'])) {
+                echo "<p style='color:green;'><b>Update complete</b></p>";
             }
 
             #Step 1 Create a list of all the products in a Table format
-            $step1 = "SELECT StuffieID, ProductName, ProductSize, Price, InvQty FROM STUFFEDANIMALSTORE;";
+            $step1 = "SELECT StuffieID, ProductName, Price, InvQty FROM STUFFEDANIMALSTORE;";
 
             $result1 = $pdo->query($step1);
             $answer1 = $result1->fetchAll(PDO::FETCH_ASSOC);
@@ -237,65 +304,7 @@ Allows the viewer to change status of orders
             echo "<input type='submit' name='step2' value='Add to InvQty'>";
             echo "</form>";
 
-            #Check if there was an answer submitted
-            if (isset($_POST['step2']))
-            {
-                $product = $_POST['product'] ?? null;
-
-                $check = true;
-
-                $qty = filter_input(INPUT_POST, 'qty', FILTER_VALIDATE_INT);
-
-                if($qty === false || $qty === null)
-                {
-                    echo "<p style='color:red'>Invalid Qty Input</p>";
-                    $check = false;
-                }
-                
-                if(!$product)
-                {
-                    echo "<p style='color:red'>No Product Selected</p>";
-                    $check = false;
-                }
-                
-                if($check)
-                {
-                    $checkStmt = $pdo->prepare("SELECT InvQty FROM STUFFEDANIMALSTORE WHERE StuffieID = ?");
-                    $checkStmt->execute([$product]);
-                    $answer2 = $checkStmt->fetch(PDO::FETCH_ASSOC);
-
-                    if(!$answer2)
-                    {
-                        echo "Invalid Request";
-                    }
-                    else
-                    {
-                        if($qty <= 0)
-                        {
-                            echo "<p style='color:red'>Invalid Qty amount</p>";
-                        }
-                        else if($qty > 9999)
-                        {
-                            echo "<p style='color:red'>Invalid Qty amount exceeds max InvQty</p>";
-                        }
-                        else
-                        {
-                            $updateSql = $pdo->prepare("UPDATE STUFFEDANIMALSTORE SET InvQty = InvQty + ? WHERE StuffieID = ?");
-                            $updateSql->execute([$qty, $product]);
-                            echo "<p style='color:green;'>Update complete</p>";
-
-                            $resultStmt = $pdo->prepare("SELECT ProductName, InvQty FROM STUFFEDANIMALSTORE WHERE StuffieID = ?");
-                            $resultStmt->execute([$product]);
-                            $updatedQTY = $resultStmt->fetch(PDO::FETCH_ASSOC);
-
-                            $qty = $updatedQTY['InvQty'];
-                            $ProductName = $updatedQTY['ProductName'];
-
-                            echo "<p><b>Product: $ProductName now has QTY of: $qty</b></p>";
-                        }
-                    }
-                }
-            }
+            
 
             #Step 3 Create a display of all Orders
             echo "<h1><b>All Orders:</b></h1>";
@@ -387,6 +396,7 @@ Allows the viewer to change status of orders
                     ?>
                 </select>
 
+                
                 <input type="submit" name="submitupdateorder" value="update order">
             </form>
 
