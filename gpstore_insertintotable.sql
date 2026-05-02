@@ -1,27 +1,27 @@
 -- STUFFED ANIMAL STORE
 INSERT INTO STUFFEDANIMALSTORE
-	(StuffieID, ProductName, ProductSize, Price, InvQty) 
+	(StuffieID, ProductName, Price, InvQty, ImagePath, StuffieDescription) 
 VALUES
-	('S006','clodsire','L',980.00,1),
-	('S018','octoplush','S',8.00,25),
-	('S002','urawr','M',67.00,6),
-	('S014','coronavirus','XL',2019.00,1),
-	('S003','mirawr','S',3.25,140),
-	('S011','shibata roll','M',455.00,7),
-	('S005','quagsire','L',620.00,2),
-	('S016','froggo','S',149.99,11),
-	('S001','erawr','M',500.00,3),
-	('S019','snugglecat','S',275.00,5),
-	('S009','shibata BIG','XL',515.00,1),
-	('S013','hedhog','S',520.00,4),
-	('S007','tamago','S',495.00,6),
-	('S010','burnt chibatta','M',499.00,2),
-	('S012','sharkie','L',510.00,2),
-	('S004','tirawr','M',487.75,5),
-	('S020','doggo deluxe','XL',1249.99,1),
-	('S015','skunkie','M',510.50,3),
-	('S008','shibata','M',420.00,8),
-	('S017','bearo','L',799.99,2);
+	('S001','erawr',500.00,3, 'https://students.cs.niu.edu/~z1977897/erawr.jpg', 'green dinosaur'),
+	('S002','urawr',67.00,6, 'https://students.cs.niu.edu/~z1977897/urawr.jpg', 'light pink dinosaur'),
+	('S003','mirawr',3.25,140, 'https://students.cs.niu.edu/~z1977897/mirawr.jpg', 'pink dinosaur'),
+	('S004','tirawr',487.75,5, 'https://students.cs.niu.edu/~z1977897/tirawr.jpg', 'yellow dinosaur'),
+	('S005','quagsire',620.00,2, 'https://students.cs.niu.edu/~z1977897/quagsire.jpg', 'quagsire pokemon'),
+	('S006','clodsire',980.00,1, 'https://students.cs.niu.edu/~z1977897/clodsire.jpg', 'clodsire pokemon'),
+	('S007','tamago',495.00,6, 'https://students.cs.niu.edu/~z1977897/tamago.jpg', 'lil egg'),
+	('S008','shibata',420.00,8, 'https://students.cs.niu.edu/~z1977897/shibata.jpg', 'shiba inu'),
+	('S009','shibata BIG',515.00,1, 'https://students.cs.niu.edu/~z1977897/shibata%20big.jpg', 'BIG shiba inu'),
+	('S010','burnt chibatta',499.00,2, 'https://students.cs.niu.edu/~z1977897/burnt%20shibata.jpg', 'black shiba inu'),
+	('S011','shibata roll',455.00,7, 'https://students.cs.niu.edu/~z1977897/shibata%20roll.jpg', 'round shiba inu'),
+	('S012','sharkie',510.00,2, 'https://students.cs.niu.edu/~z1977897/sharkie.jpg', 'shark with a pineapple surfboard'),
+	('S013','hedhog',520.00,4, 'https://students.cs.niu.edu/~z1977897/hedgehog.jpg', 'squeaks, honks, AND crinkles?! perfect for dogs or people with whimsy'),
+	('S014','coronavirus',2019.00,1, 'https://students.cs.niu.edu/~z1977897/corona.jpg', 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHHHHHHHHHHHHHH'),
+	('S015','skunkie',510.50,3, 'https://students.cs.niu.edu/~z1977897/skunkie.jpg', 'BIG FAT GUY he wants love, i know hes expensive but pls buy him'),
+	('S016','toast',11.98,67, 'https://students.cs.niu.edu/~z1977897/toast.jpg', 'This little cutie is double the price of a "2-Egg Breakfast Slam" at Dennys! You only get one toast, one egg, and no hashbrowns- but it does come with a smile! What a steal! Pay no mind to the cat fur, its a little garnish from our sous chef, Khors.'),
+	('S017','nothing',13.65,2, 'https://students.cs.niu.edu/~z1977897/nothing.jpg', 'Exactly what it says on the tin: absolutely nothing. You still have to pay for shipping though. Just dont ask why you dont have to pay for shipping for any of the other products.'),
+	('S018','mama cow and baby',2032.54,25, 'https://students.cs.niu.edu/~z1977897/mamacow.jpg', 'This mama Ayrshire cow and her baby is a two for one deal! Two peas in a pod, if you will! Take away her baby and she will grind you up, make you into food for the pigs, and youll forever be an unsolved mystery- how lovely!'),
+	('S019','cow',1432.32,67, 'https://students.cs.niu.edu/~z1977897/cow.jpg', 'A Holstein-Friesian cow! Free range, grass fed- the whole lot! And thats not all! He loves smooth jazz, lazing about, and is very aerodynamic! Just dont tip him over, he will cry.'),
+	('S020','khors!?',9999.99,1, 'https://students.cs.niu.edu/~z1977897/horse.jpg', 'A very gaseous and gluttonus creature that eats like a horse- wait, whats he doing here!?');
 
 -- SHOPPING CART
 INSERT INTO SHOPPINGCART
