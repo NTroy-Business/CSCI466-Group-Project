@@ -60,11 +60,11 @@ VALUES
 	('S013','hedhog',520.00,4, 'https://students.cs.niu.edu/~z1977897/hedgehog.jpg', 'squeaks, honks, AND crinkles?! perfect for dogs or people with whimsy'),
 	('S014','coronavirus',2019.00,1, 'https://students.cs.niu.edu/~z1977897/corona.jpg', 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHHHHHHHHHHHHHH'),
 	('S015','skunkie',510.50,3, 'https://students.cs.niu.edu/~z1977897/skunkie.jpg', 'BIG FAT GUY he wants love, i know hes expensive but pls buy him'),
-	('S016','froggo',149.99,11, 'https://students.cs.niu.edu/~z1977897/skunkie.jpg', 'hi'),
-	('S017','bearo',799.99,2, 'https://students.cs.niu.edu/~z1977897/skunkie.jpg', 'hi'),
-	('S018','octoplush',8.00,25, 'https://students.cs.niu.edu/~z1977897/skunkie.jpg', 'hi'),
-	('S019','snugglecat',275.00,5, 'https://students.cs.niu.edu/~z1977897/skunkie.jpg', 'hi'),
-	('S020','doggo deluxe',1249.99,1, 'https://students.cs.niu.edu/~z1977897/skunkie.jpg', 'hi');
+	('S016','toast',11.98, 'https://students.cs.niu.edu/~z1977897/toast.jpg', 'This little cutie is double the price of a "2-Egg Breakfast Slam" at Dennys! You only get one toast, one egg, and no hashbrowns- but it does come with a smile! What a steal! Pay no mind to the cat fur, its a little garnish from our sous chef, Khors.'),
+	('S017','nothing',13.65,2, 'https://students.cs.niu.edu/~z1977897/nothing.jpg', 'Exactly what it says on the tin: absolutely nothing. You still have to pay for shipping though. Just dont ask why you dont have to pay for shipping for any of the other products.'),
+	('S018','mama cow and baby',2032.54,25, 'https://students.cs.niu.edu/~z1977897/mamacow.jpg', 'This mama Ayrshire cow and her baby is a two for one deal! Two peas in a pod, if you will! Take away her baby and she will grind you up, make you into food for the pigs, and youll forever be an unsolved mystery- how lovely!'),
+	('S019','cow',1432.32, 'https://students.cs.niu.edu/~z1977897/cow.jpg', 'A Holstein-Friesian cow! Free range, grass fed- the whole lot! And thats not all! He loves smooth jazz, lazing about, and is very aerodynamic! Just dont tip him over, he will cry.'),
+	('S020','khors!?',1000000.00,1, 'https://students.cs.niu.edu/~z1977897/horse.jpg', 'A very gaseous and gluttonus creature that eats like a horse- wait, whats he doing here!?');
 
 -- SHOPPING CART
 INSERT INTO SHOPPINGCART
