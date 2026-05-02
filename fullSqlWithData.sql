@@ -6,9 +6,10 @@ DROP TABLE IF EXISTS STUFFEDANIMALSTORE;
 CREATE TABLE STUFFEDANIMALSTORE (
     StuffieID VARCHAR(64) NOT NULL,
     ProductName VARCHAR(64) NOT NULL,
-    ProductSize ENUM('S','M','L','XL') NOT NULL,
     Price DECIMAL(6,2) NOT NULL,
     InvQty INT NOT NULL,
+	ImagePath VARCHAR(500) NOT NULL,
+	StuffieDescription VARCHAR(500) NOT NULL,
     PRIMARY KEY (StuffieID)
 );
 
@@ -42,28 +43,28 @@ CREATE TABLE REQUESTS (
 
 -- STUFFED ANIMAL STORE
 INSERT INTO STUFFEDANIMALSTORE
-	(StuffieID, ProductName, ProductSize, Price, InvQty) 
+	(StuffieID, ProductName, Price, InvQty, ImagePath, StuffieDescription) 
 VALUES
-	('S001','erawr','M',500.00,3),
-	('S002','urawr','M',67.00,6),
-	('S003','mirawr','S',3.25,140),
-	('S004','tirawr','M',487.75,5),
-	('S005','quagsire','L',620.00,2),
-	('S006','clodsire','L',980.00,1),
-	('S007','tamago','S',495.00,6),
-	('S008','shibata','M',420.00,8),
-	('S009','shibata BIG','XL',515.00,1),
-	('S010','burnt chibatta','M',499.00,2),
-	('S011','shibata roll','M',455.00,7),
-	('S012','sharkie','L',510.00,2),
-	('S013','hedhog','S',520.00,4),
-	('S014','coronavirus','XL',2019.00,1),
-	('S015','skunkie','M',510.50,3),
-	('S016','froggo','S',149.99,11),
-	('S017','bearo','L',799.99,2),
-	('S018','octoplush','S',8.00,25),
-	('S019','snugglecat','S',275.00,5),
-	('S020','doggo deluxe','XL',1249.99,1);
+	('S001','erawr',500.00,3, 'https://students.cs.niu.edu/~z1977897/erawr.jpg', 'green dinosaur'),
+	('S002','urawr',67.00,6, 'https://students.cs.niu.edu/~z1977897/urawr.jpg', 'light pink dinosaur'),
+	('S003','mirawr',3.25,140, 'https://students.cs.niu.edu/~z1977897/mirawr.jpg', 'pink dinosaur'),
+	('S004','tirawr',487.75,5, 'https://students.cs.niu.edu/~z1977897/tirawr.jpg', 'yellow dinosaur'),
+	('S005','quagsire',620.00,2, 'https://students.cs.niu.edu/~z1977897/quagsire.jpg', 'quagsire pokemon'),
+	('S006','clodsire',980.00,1, 'https://students.cs.niu.edu/~z1977897/clodsire.jpg', 'clodsire pokemon'),
+	('S007','tamago',495.00,6, 'https://students.cs.niu.edu/~z1977897/tamago.jpg', 'lil egg'),
+	('S008','shibata',420.00,8, 'https://students.cs.niu.edu/~z1977897/shibata.jpg', 'shiba inu'),
+	('S009','shibata BIG',515.00,1, 'https://students.cs.niu.edu/~z1977897/shibata%20big.jpg', 'BIG shiba inu'),
+	('S010','burnt chibatta',499.00,2, 'https://students.cs.niu.edu/~z1977897/burnt%20shibata.jpg', 'black shiba inu'),
+	('S011','shibata roll',455.00,7, 'https://students.cs.niu.edu/~z1977897/shibata%20roll.jpg', 'round shiba inu'),
+	('S012','sharkie',510.00,2, 'https://students.cs.niu.edu/~z1977897/sharkie.jpg', 'shark with a pineapple surfboard'),
+	('S013','hedhog',520.00,4, 'https://students.cs.niu.edu/~z1977897/hedgehog.jpg', 'squeaks, honks, AND crinkles?! perfect for dogs or people with whimsy'),
+	('S014','coronavirus',2019.00,1, 'https://students.cs.niu.edu/~z1977897/corona.jpg', 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHHHHHHHHHHHHHH'),
+	('S015','skunkie',510.50,3, 'https://students.cs.niu.edu/~z1977897/skunkie.jpg', 'BIG FAT GUY he wants love, i know hes expensive but pls buy him'),
+	('S016','froggo',149.99,11, 'https://students.cs.niu.edu/~z1977897/skunkie.jpg', 'hi'),
+	('S017','bearo',799.99,2, 'https://students.cs.niu.edu/~z1977897/skunkie.jpg', 'hi'),
+	('S018','octoplush',8.00,25, 'https://students.cs.niu.edu/~z1977897/skunkie.jpg', 'hi'),
+	('S019','snugglecat',275.00,5, 'https://students.cs.niu.edu/~z1977897/skunkie.jpg', 'hi'),
+	('S020','doggo deluxe',1249.99,1, 'https://students.cs.niu.edu/~z1977897/skunkie.jpg', 'hi');
 
 -- SHOPPING CART
 INSERT INTO SHOPPINGCART
