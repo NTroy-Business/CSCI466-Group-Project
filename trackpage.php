@@ -13,6 +13,7 @@ catch(PDOException $e)
     echo "Connection to database failed: " . $e->getMessage();
 }
     ?> 
+
 <!DOCTYPE HTML>
 <html>
     <head>
@@ -20,6 +21,7 @@ catch(PDOException $e)
         <meta charset="UTF-8">
 
         <style>
+            h2 {text-align: center; color:purple;}
             .top-right-btn {
                 position: fixed;
                 top: 15px;
@@ -106,6 +108,7 @@ catch(PDOException $e)
                 background-color: lavender;
                 margin: 0;
                 font-family: Arial, sans-serif;
+                position: relative;
             }
 
             .page-wrapper {
@@ -218,6 +221,7 @@ catch(PDOException $e)
             GET ORDER DATA
             ======================= */
             $order = null;
+            $TotalPrice = "";
 
             if ($_SERVER["REQUEST_METHOD"] === "POST")
             {
@@ -235,32 +239,83 @@ catch(PDOException $e)
                     $order = $stmt->fetch(PDO::FETCH_ASSOC);
                 }
             }
-
-            /* =======================
-            TRACKING LOGIC
-            ======================= */
-            $status = $order["OrderStatus"] ?? "";
-
-            function activeStep($status, $steps)
-            {
-                return in_array($status, $steps)
-                    ? "filter: hue-rotate(270deg) saturate(1.5);"
-                    : "opacity: 0.3;";
-            }
         ?>
     </head>
 
     <body>
+        <?php
+            if ($_SERVER["REQUEST_METHOD"] === "POST")
+            {
+                /* =======================
+                TRACKING LOGIC
+                ======================= */
+
+                $status = $order["OrderStatus"] ?? "";
+               
+                function activeStep($status, $steps)
+                {
+                    return in_array($status, $steps)
+                        ? "filter: hue-rotate(270deg) saturate(1.5);"
+                        : "opacity: 0.3;";
+                }
+
+                $TotalPrice = 0.00;
+
+                $sqlPrepared = $pdo->prepare("
+                    SELECT STUFFEDANIMALSTORE.StuffieID, STUFFEDANIMALSTORE.Price, SHOPPINGCART.CartQty
+                    FROM SHOPPINGCART 
+                    JOIN STUFFEDANIMALSTORE 
+                    ON SHOPPINGCART.StuffieID = STUFFEDANIMALSTORE.StuffieID
+                    WHERE SHOPPINGCART.TrackingID = ? 
+                "); // TrackingID = SessionID
+
+                $sqlPrepared->execute([$TrackingID]);
+                $cartItems = $sqlPrepared->fetchAll(PDO::FETCH_ASSOC);
+
+                $PriceArray = [];
+
+                $DefaultStatus = "OrderPlaced";
+                foreach($cartItems as $item)
+                {
+                    $Price = (float)$item['Price'];
+                    $Qty = (int)$item['CartQty'];
+                                    
+                    $lineTotal = $Price * $Qty;
+                    $PriceArray[] = number_format($lineTotal, 2, '.', ''); // Adds current Price into the array to be used and formatted later
+                    $TotalPrice += $lineTotal;
+                }
+
+                $FormatTotal = number_format($TotalPrice, 2, '.', '');
+                $errorMessage = "";
+            }
+        ?>
+
         <img class="side-ad ad-left" src="https://media.tenor.com/IRFM1RzwxV0AAAAm/goku-dance.webp">
         <img class="side-ad ad-right" src="https://media.tenor.com/cgByUMFw0r8AAAAm/minecraft-minecraft-steve.webp">
 
         <div class="page-wrapper">
+            <a href="https://students.cs.niu.edu/~z1977897/gpstore.php" class="top-right-btn">
+                Store Home
+            </a>
+
+            <a href="https://students.cs.niu.edu/~z1977897/shoppingcart.php" class="top-right-btn2">
+                My Cart
+            </a>
             <h1>TRACK YOUR ORDER</h1>
 
             <form method="POST" class="track-form">
                 <input type="text" name="TrackingID" maxlength="64" placeholder="Enter Tracking ID" required>
                 <button type="submit">Track Your Order</button>
             </form>
+
+            <h2>
+                <?php
+                    if ($TotalPrice > 0)
+                    {
+                        echo "Amount paid: $" . number_format($TotalPrice, 2, '.', '');
+                    }
+                ?>
+            </h2>
 
             <div class="gallery">
                 <img class="img-box" title="Your Order Has Been Placed"
@@ -280,13 +335,5 @@ catch(PDOException $e)
                 src="https://students.cs.niu.edu/~z1977897/order%20delivered.png">
             </div>
         </div>
-
-        <a href="https://students.cs.niu.edu/~z1977897/gpstore.php" class="top-right-btn">
-            Store Home
-        </a>
-
-        <a href="https://students.cs.niu.edu/~z1977897/checkout.php" class="top-right-btn2">
-            Checkout
-        </a>
     </body>
 </html>
